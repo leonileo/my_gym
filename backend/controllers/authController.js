@@ -5,6 +5,7 @@ const Admin = require('../models/adminModel.js');
 const Trainer = require('../models/trainerModel.js');
 const Client = require('../models/clientModel.js');
 const {generateTokenAdmin, generateTokenTrainer, generateTokenClient} = require('../utils/generateToken.js');
+const Progress = require("../models/progressModel.js");
 
 // @desc    Auth admin and get token
 // @route   POST /apiv1/auth/signin/admin
@@ -97,7 +98,7 @@ const signinClient = asyncHandler( async(req, res) => {
 // @route   POST /apiv1/auth/signup/admin
 // @access  Private
 const signupAdmin = asyncHandler( async (req, res) => {
-    const { firstName, fatherName, picture, email, password } = req.body;
+    const { firstName, fatherName, email, password } = req.body;
 
     try {
         const adminExists = await Admin.findOne({ email });
@@ -107,7 +108,7 @@ const signupAdmin = asyncHandler( async (req, res) => {
             throw new Error('Admin already exists')
         } else {
             const admin = await Admin.create({
-                firstName, fatherName, picture, email, password, isAdmin: true
+                firstName, fatherName, email, password, isAdmin: true
             })
 
             if (admin) {
@@ -132,7 +133,7 @@ const signupAdmin = asyncHandler( async (req, res) => {
 // @route   POST /apiv1/auth/signup/trainer
 // @access  Private
 const signupTrainer = asyncHandler( async (req, res) => {
-    const { firstName, fatherName, sex, picture, email, phoneNo, password } = req.body;
+    const { firstName, fatherName, sex, email, phoneNo, password } = req.body;
 
     try {
         const trainerExists = await Trainer.findOne({ email });
@@ -141,11 +142,14 @@ const signupTrainer = asyncHandler( async (req, res) => {
             res.status(400);
             throw new Error('Trainer already exists')
         } else {
+
+            const trainerLength = (await Trainer.find({})).length;
+
             const trainer = await Trainer.create({
+                trainerId: `T-Id-${trainerLength + 1}`,
                 firstName,
                 fatherName,
                 sex,
-                picture,
                 email,
                 phoneNo,
                 password,
@@ -174,7 +178,32 @@ const signupTrainer = asyncHandler( async (req, res) => {
 // @route   POST /apiv1/auth/signup/client
 // @access  Private
 const signupClient = asyncHandler( async (req, res) => {
-    const { firstName, fatherName, sex, DOB, picture, email, phoneNo, password } = req.body;
+    const { firstName, fatherName, sex, DOB, email, phoneNo, password } = req.body;
+    
+    // checking and creating an id for client and client's progress
+    const clientLength = (await Client.find({})).length;
+    const progressLength = (await Progress.find({})).length;
+
+    // @Algo 
+    // @desc:  Below is an algorith that assign Id's for client and client progress data
+    //         if first checks the last created client id then grab and split the string, 
+    //         then it adds the splited string to the array `newClientId`. 
+    //         Same process goes for the progess.
+
+    // grabbing the last client id
+    const lastId = await Client.find({}).sort({$natural: -1}).limit(1); 
+    var clientStr = lastId[0].clientId;
+    var newClientId = [];
+    newClientId = clientStr.split("-")
+
+    // grabbing the last client's progress id
+    const lastProgressId = await Progress.find({}).sort({$natural: -1}).limit(1); 
+    var clientPStr = lastProgressId[0].progressId;
+    var newClientProgressId = [];
+    newClientProgressId = clientPStr.split("-")
+    const progressId = `P-Id-${progressLength === 0 ? progressLength + 1 : Number(newClientProgressId[2]) + 1}`;
+
+    // @Algo 
 
     try {
         const clientExists = await Client.findOne({ email });
@@ -183,32 +212,57 @@ const signupClient = asyncHandler( async (req, res) => {
             res.status(400);
             throw new Error('Client already exists')
         } else {
-            const client = await Client.create({
-                firstName,
-                fatherName,
-                sex,
-                DOB,
-                picture,
-                email,
-                phoneNo,
-                password,
-                isClient: true
-            })
 
-            if (client) {
-                generateTokenClient(res, client._id);
-                res.status(201).json({
-                    _id: client._id,
-                    name: `${client.firstName} ${client.fatherName}`,
-                    email: client.email,
-                    isClient: client.isClient
+            // checking if the clients and progress db has equal number of client's data
+            if (clientLength === progressLength){
+                // checking and creating an id for client and client's progress
+                const clientId = `C-Id-${clientLength === 0 ? clientLength + 1 : Number(newClientId[2]) + 1 }`;
+                const progressId = `P-Id-${progressLength === 0 ? progressLength + 1 : Number(newClientProgressId[2]) + 1}`;
+
+                // create a progress data for the client
+                const newProgress = await Progress.create({
+                    clientId,
+                    progressId
                 });
+
+                if (newProgress){
+
+                    const client = await Client.create({
+                        clientId,
+                        progressId,
+                        firstName,
+                        fatherName,
+                        sex,
+                        DOB, // format yyyy-mm-dd
+                        email,
+                        phoneNo,
+                        password,
+                        isClient: true
+                    })
+                    
+                    if (client) {
+                        generateTokenClient(res, client._id);
+                        res.status(201).json({
+                            _id: client._id,
+                            name: `${client.firstName} ${client.fatherName}`,
+                            email: client.email,
+                            isClient: client.isClient
+                        });
+                    } else {
+                        res.status(400);
+                        throw new Error('Invalid Client data.');
+                    }
+                } else {
+                    res.status(400);
+                    throw new Error('An error occured while creating client progress data.')
+                }
             } else {
-                res.status(400);
-                throw new Error('Invalid Client data');
+                res.status(500);
+                throw new Error('An error occured while creating client')
             }
         }
     } catch (error) {
+        await Progress.findOneAndDelete({progressId: progressId})
         throw new Error(error);
     }
 })
