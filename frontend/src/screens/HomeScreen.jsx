@@ -1,5 +1,5 @@
 import React from 'react'
-import HeaderComponent from '../components/HeroComponent';
+import HeaderComponent from '../components/HeaderComponent';
 import HeroComponent from '../components/HeroComponent';
 import TrainersComponent from '../components/TrainersComponent';
 import FeaturesComponent from '../components/FeaturesComponent';

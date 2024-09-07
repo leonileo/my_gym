@@ -24,6 +24,13 @@ export const authApiSlice = apiSlice.injectEndpoints({
                 body: data,
             }),
         }),
+        signupAdmin: builder.mutation({
+            query: (data) => ({
+                url: `${AUTH_URL}/signup/admin`,
+                method: 'POST',
+                body: data,
+            }),
+        }),
         signupTrainer: builder.mutation({
             query: (data) => ({
                 url: `${AUTH_URL}/signup/trainer`,
@@ -53,5 +60,7 @@ export const {
     useSigninClientMutation,
     useSignupTrainerMutation,
     useSignupClientMutation,
-    useSignoutMutation
+    useSignoutMutation,
+    // 
+    useSignupAdminMutation
 } = authApiSlice;
