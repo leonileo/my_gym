@@ -8,7 +8,7 @@ const workoutSchema = new mongoose.Schema({
     workoutName: {type: String, required: true},
     workoutCategory: {type: String, required: true},
     workoutDescription: {type: String, required: true},
-    workoutPicture: {type: String, required: true},
+    workoutPicture: {type: String},
     workoutVideoLink: {type: String},
     workoutDuration: {type: String, required: true},
     workoutSteps: {type: String, required: true},
