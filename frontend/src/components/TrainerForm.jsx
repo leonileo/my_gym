@@ -39,10 +39,10 @@ const TrainerForm = () => {
     }
     
   return (
-    <form onSubmit={submitHandler} className="form w-full px-5 transition-all">
+    <form onSubmit={submitHandler} className="form w-full px-5 transition-all my-5">
         <span className='text-gray-500 font-semibold'>Trainer signin</span>
-        <div className="topc my-5 space-y-4 text-gray-600">
-            <h1 className='font-bold md:text-4xl'>My gym</h1>
+        <div className="topc md:my-5 md:space-y-4 my-2 space-y-2 text-gray-600">
+            <h1 className='font-bold md:text-4xl text-2xl'>My gym</h1>
             <p className='md:text-2xl'>Signin into your account</p>
         </div>
         <div className="inputs space-y-5 pr-8">

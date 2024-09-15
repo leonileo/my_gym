@@ -34,89 +34,92 @@ const ClientProfilePage = () => {
   }
 
   // dummy data
-  // const progress = [
-  //   {
-  //     workout: "Yoga",
-  //     clientPicture: gymImg,
-  //     weightInPicture: gymImg,
-  //     weightInNumber: "76 Killo gram",
-  //     isWorkoutDone: true,
-  //     progressDate: "2024-09-10"
-  //   },
-  //   {
-  //     workout: "Yoga",
-  //     clientPicture: gymImg,
-  //     weightInPicture: gymImg,
-  //     weightInNumber: "76 Killo gram",
-  //     isWorkoutDone: true,
-  //     progressDate: "2024-09-09"
-  //   },
-  //   {
-  //     workout: "Digup",
-  //     clientPicture: gymImg,
-  //     weightInPicture: gymImg,
-  //     weightInNumber: "56 Killo gram",
-  //     isWorkoutDone: true,
-  //     progressDate: "2024-09-08"
-  //   },
-  //   {
-  //     workout: "Pushup",
-  //     clientPicture: gymImg,
-  //     weightInPicture: gymImg,
-  //     weightInNumber: "56 Killo gram",
-  //     isWorkoutDone: true,
-  //     progressDate: "2024-09-08"
-  //   },
-  //   {
-  //     workout: "Digup",
-  //     clientPicture: gymImg,
-  //     weightInPicture: gymImg,
-  //     weightInNumber: "56 Killo gram",
-  //     isWorkoutDone: true,
-  //     progressDate: "2024-09-08"
-  //   },
-  //   {
-  //     workout: "Pushup",
-  //     clientPicture: gymImg,
-  //     weightInPicture: gymImg,
-  //     weightInNumber: "56 Killo gram",
-  //     isWorkoutDone: true,
-  //     progressDate: "2024-09-08"
-  //   },
-  //   {
-  //     workout: "Digup",
-  //     clientPicture: gymImg,
-  //     weightInPicture: gymImg,
-  //     weightInNumber: "56 Killo gram",
-  //     isWorkoutDone: true,
-  //     progressDate: "2024-09-08"
-  //   },
-  //   {
-  //     workout: "Pushup",
-  //     clientPicture: gymImg,
-  //     weightInPicture: gymImg,
-  //     weightInNumber: "56 Killo gram",
-  //     isWorkoutDone: true,
-  //     progressDate: "2024-09-08"
-  //   },
-  // ];
 
-  const progress = null;
+  // progress available
+  const progress = [
+    {
+      workout: "Yoga",
+      clientPicture: gymImg,
+      weightInPicture: gymImg,
+      weightInNumber: "76 Killo gram",
+      isWorkoutDone: true,
+      progressDate: "2024-09-10"
+    },
+    {
+      workout: "Yoga",
+      clientPicture: gymImg,
+      weightInPicture: gymImg,
+      weightInNumber: "76 Killo gram",
+      isWorkoutDone: true,
+      progressDate: "2024-09-09"
+    },
+    {
+      workout: "Digup",
+      clientPicture: gymImg,
+      weightInPicture: gymImg,
+      weightInNumber: "56 Killo gram",
+      isWorkoutDone: true,
+      progressDate: "2024-09-08"
+    },
+    {
+      workout: "Pushup",
+      clientPicture: gymImg,
+      weightInPicture: gymImg,
+      weightInNumber: "56 Killo gram",
+      isWorkoutDone: true,
+      progressDate: "2024-09-08"
+    },
+    {
+      workout: "Digup",
+      clientPicture: gymImg,
+      weightInPicture: gymImg,
+      weightInNumber: "56 Killo gram",
+      isWorkoutDone: true,
+      progressDate: "2024-09-08"
+    },
+    {
+      workout: "Pushup",
+      clientPicture: gymImg,
+      weightInPicture: gymImg,
+      weightInNumber: "56 Killo gram",
+      isWorkoutDone: true,
+      progressDate: "2024-09-08"
+    },
+    {
+      workout: "Digup",
+      clientPicture: gymImg,
+      weightInPicture: gymImg,
+      weightInNumber: "56 Killo gram",
+      isWorkoutDone: true,
+      progressDate: "2024-09-08"
+    },
+    {
+      workout: "Pushup",
+      clientPicture: gymImg,
+      weightInPicture: gymImg,
+      weightInNumber: "56 Killo gram",
+      isWorkoutDone: true,
+      progressDate: "2024-09-08"
+    },
+  ];
+
+  // progress not available
+  // const progress = null;
 
   // trainer info available
-  // const trainer = {
-  //     name: "Trainer 1",
-  //     sex: "Male",
-  //     picture: gymImg,
-  //     email: "trainer1@email.com",
-  //     verifiedTrainer: true,
-  //     description: "I am trainer 1, a great trainer!",
-  //     serviceList: ["Yoga", "Weight loss", "Bulk", "Lifting"],
-  //     phoneNo: "0900000000",
-  //   };
+  const trainer = {
+    name: "Trainer 1",
+    sex: "Male",
+    picture: gymImg,
+    email: "trainer1@email.com",
+    verifiedTrainer: true,
+    description: "I am trainer 1, a great trainer!",
+    serviceList: ["Yoga", "Weight loss", "Bulk", "Lifting"],
+    phoneNo: "0900000000",
+  };
   // dummy data
   // trainer info not available
-  const trainer = null;
+  // const trainer = null;
   
   return (
     <>
@@ -364,18 +367,18 @@ const ClientProfilePage = () => {
               {/* delete modal */}
               {delModal && (
                 <div className='absolute w-full h-full left-0 top-0 bg-[rgba(0,0,0,0.5)] flex justify-center items-start md:p-5'>
-                  <div className='bg-white md:w-[50%] py-2 px-5 sticky top-0'>
+                  <div className='bg-white md:w-[50%] w-[90%] py-2 px-5 sticky top-0'>
                     <div className='flex justify-center items-center my-5 text-red-500'>
                       <div>
                         <div className="flex justify-center">
-                          <IoWarningOutline  className='w-10 h-10'/>
+                          <IoWarningOutline className='w-10 h-10'/>
                         </div>
                         <p className='text-center'> Delete <span className='font-semibold'>{delName}</span></p>
                       </div>
                     </div>
                     <div className="info text-red-500 mb-5">
                       <div className="top flex items-start gap-2">
-                        <div className='border p-2 rounded-full w-8 h-8'><FaInfo /></div>
+                        <div className='bg-red-50 p-2 rounded-full w-8 h-8'><FaInfo /></div>
                         <div>
                           <p>By deleting your trainer, you will no longer have access to any resources associated with the trainer.</p>
                           <div className="txt">
@@ -400,7 +403,7 @@ const ClientProfilePage = () => {
     
                     <div className="btns flex items-end gap-3 justify-end px-5 w-full">
                       {delName === delInput && <button onClick={handleDelete} className='px-5 p-2 border border-red-500 rounded hover:bg-red-500 hover:text-white text-red-500 transition-all'>Delete</button>}
-                      <button onClick={() => setDelModal(!delModal)} className='px-5 p-2 border border-blue-500 rounded hover:bg-blue-500 hover:text-white text-blue-500 transition-all'>Cancel</button>
+                      <button onClick={() => {setDelName(''); setDelInput(''); setDelModal(!delModal)}} className='px-5 p-2 border border-blue-500 rounded hover:bg-blue-500 hover:text-white text-blue-500 transition-all'>Cancel</button>
                     </div>
                   </div>
                 </div>
@@ -459,14 +462,15 @@ const ClientProfilePage = () => {
                           <div className="sex text-gray-500 capitalize space-y-2">
                             <label htmlFor='sex' className='md:text-xl'>Sex</label>
                             <select name="sex" id="sex" className='block rounded'>
-                              <option>Choose sex</option>
+                              <option value=''>Choose sex</option>
                               <option value={'Female'}>Female</option>
                               <option value={'Male'}>Male</option>
                             </select>
                           </div>
-                          <div className='flex justify-center items-start'>
-                            <p className='p-2 bg-gray-200 text-teal-500 rounded px-5 flex gap-5 hover:text-white hover:bg-teal-500 transition-all cursor-pointer items-center'> Update profile</p>
-                          </div>
+                        </div>
+                        <div className='flex justify-center items-start my-5 gap-5'>
+                          <button className='p-2 border border-teal-500 text-teal-500 rounded px-5 flex gap-5 hover:text-white hover:bg-teal-500 transition-all cursor-pointer items-center'> Update profile</button>
+                          <button onClick={() => setModal(1)} className='border border-red-500 p-2 px-5 rounded text-red-500 hover:text-white hover:bg-red-500 transition-all flex gap-2 items-center'>Cancel </button>
                         </div>
                       </div>
                     </div>

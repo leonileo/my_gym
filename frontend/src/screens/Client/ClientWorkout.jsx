@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import ClientSideNavComponent from '../../components/Client/ClientSideNavComponent'
+import ClientWorkoutComponent from '../../components/Client/ClientWorkoutComponent';
+
 import gymImg from '../../assets/images/gymImg.jpg'
 import { MdOutlineNoteAlt, MdTimer } from 'react-icons/md';
 import { FaCheck, FaDumbbell, FaVideo } from 'react-icons/fa6';
@@ -13,7 +15,6 @@ import 'swiper/css/pagination';
 
 import { Autoplay, Pagination } from 'swiper/modules';
 import { PiImageBroken } from 'react-icons/pi';
-import { Tooltip } from 'flowbite-react';
 
 
 const ClientWorkout = () => {
@@ -162,8 +163,8 @@ const ClientWorkout = () => {
     },
   ]
 
-  // const trainer = {n : "null"};
-  const trainer = null;
+  const trainer = {n : "null"};
+  // const trainer = null;
 
   // dummy data
 
@@ -219,23 +220,7 @@ const ClientWorkout = () => {
                       {/* loop through workouts */}
                       {workouts.map(workout => (
                       <SwiperSlide onClick={() =>stepHandler(workout.trainerId, workout.workoutName, workout.workoutCategory, workout.workoutDescription, workout.workoutPicture, workout.workoutVideoLink, workout.workoutDuration, workout.workoutSteps, workout.equipmentRequired, workout.equipmentList)} >
-                      <div className='h-full rounded-b overflow-hidden'>
-                        <div 
-                          style={{
-                            backgroundImage: `linear-gradient(45deg, rgba(255, 255, 255, .1), rgba(6, 148, 162, 1)), url(${gymImg})`,
-                            backgroundRepeat: "no-repeat",
-                            backgroundSize: "cover",
-                            backgroundPosition: "center",
-                          }}
-                          className='p-4 img rounded-t mb-3 h-[80%] w-full'>
-                            <p className='bg-[rgba(255,255,255,0.8)] w-fit p-2 rounded capitalize'>{workout.workoutName}</p>
-                          </div>
-                          <div className="details p-2 flex justify-start gap-5">
-                            <p className={`p-2 px-3 text-nowrap text-sm text-gray-500 bg-gray-200 rounded flex items-center gap-2`}><MdTimer/> {workout.workoutDuration}</p>
-                            <p className={`p-2 px-3 text-nowrap text-sm text-gray-500 bg-gray-200 rounded flex items-center gap-2`}><FaDumbbell/> {workout.workoutCategory}</p>
-                            <p className={`p-2 px-3 text-nowrap text-sm text-gray-500  rounded ${workout.equipmentRequired ? "bg-teal-500 text-white": "bg-gray-400 text-white" }`}>{workout.equipmentRequired ? <p className='flex items-center gap-2'>Equipment required <FaCheck /> </p> : "No equipment is required. "}</p>
-                          </div>
-                      </div> 
+                        <ClientWorkoutComponent workoutPicture={gymImg} workoutName={workout.workoutName} workoutDuration={workout.workoutDuration} workoutCategory={workout.workoutCategory} equipmentRequired={workout.equipmentRequired} />
                       </SwiperSlide>
                       ))}
                       </Swiper>
@@ -263,21 +248,7 @@ const ClientWorkout = () => {
                         {workouts.map(workout => (
                       <SwiperSlide onClick={() =>stepHandler(workout.trainerId, workout.workoutName, workout.workoutCategory, workout.workoutDescription, workout.workoutPicture, workout.workoutVideoLink, workout.workoutDuration, workout.workoutSteps, workout.equipmentRequired, workout.equipmentList)} >
                         <div className='rounded-b overflow-hidden mb-10'>
-                          <div 
-                            style={{
-                              backgroundImage: `linear-gradient(45deg, rgba(255, 255, 255, .1), rgba(6, 148, 162, 1)), url(${gymImg})`,
-                              backgroundRepeat: "no-repeat",
-                              backgroundSize: "cover",
-                              backgroundPosition: "center",
-                            }}
-                            className='p-4 img rounded-t mb-3 h-[250px] w-full'>
-                              <p className='bg-[rgba(255,255,255,0.8)] w-fit p-2 rounded capitalize'>{workout.workoutName}</p>
-                            </div>
-                            <div className="details p-2 flex justify-start gap-5">
-                              <p className={`p-2 px-3 text-nowrap text-sm text-gray-500 bg-gray-200 rounded flex items-center gap-2`}><MdTimer/> {workout.workoutDuration}</p>
-                              <p className={`p-2 px-3 text-nowrap text-sm text-gray-500 bg-gray-200 rounded flex items-center gap-2`}><FaDumbbell/> {workout.workoutCategory}</p>
-                              <p className={`p-2 px-3 text-nowrap text-sm text-gray-500  rounded ${workout.equipmentRequired ? "bg-teal-500 text-white": "bg-gray-400 text-white" }`}>{workout.equipmentRequired ? <p className='flex items-center gap-2'>Equipment required <FaCheck /> </p> : "No equipment is required. "}</p>
-                            </div>
+                          <ClientWorkoutComponent workoutPicture={gymImg} workoutName={workout.workoutName} workoutDuration={workout.workoutDuration} workoutCategory={workout.workoutCategory} equipmentRequired={workout.equipmentRequired} />
                         </div> 
                         </SwiperSlide>
                         ))}
@@ -328,15 +299,15 @@ const ClientWorkout = () => {
               </div>
             ) : (
               <div className='w-full transition-all relative'>
-                <h2 className='md:text-2xl font-semibold my-10 text-gray-400 transition-all' onClick={() => setModal(1)}>Workouts / <span className='text-gray-700'> {workoutName} </span></h2>
+                <h2 className='xl:text-2xl font-semibold my-10 text-gray-400 transition-all' onClick={() => setModal(1)}>Workouts / <span className='text-gray-700'> {workoutName} </span></h2>
                 <div className="rounded flex justify-center w-full h-[80vh]">
-                  <div className="bg-gray-50 rounded md:p-5 md:px-8 md:w-[90%] w-full overflow-auto relative">
-                    <div className="top mb-5 bg-inherit p-5 md:relative bgw sticky top-0 z-50">
+                  <div className="bg-gray-50 rounded xl:p-5 xl:px-8 xl:w-[90%] w-full overflow-auto relative">
+                    <div className="top mb-5 bg-inherit p-5 xl:relative bgw sticky top-0 z-50">
                       <div className="div flex justify-between">
                         <p className='font-semibold text-xl'>{workoutCategory}</p>
                         <p onClick={() => setModal(1)}><RxCrossCircled className='w-10 h-10 hover:text-red-600 transition-all cursor-pointer' /></p>
                       </div>
-                      <p className='font-semibold text-3xl'>{workoutName}</p>
+                      <p className='font-semibold xl:text-3xl text-2xl'>{workoutName}</p>
                     </div>
     
                     <div className="bottom border bg-white min-h-[55vh] md:max-h-[70vh] h-fit rounded overflow-hidden ">
@@ -404,23 +375,27 @@ const ClientWorkout = () => {
                   </div>
                   
                   {/* progress modal */}
-                  <div className={`${!progressModal ? "hidden" : "block"} progress-modal absolute m-0 z-50 top-0 w-full h-full bg-[rgba(0,0,0,0.8)] flex items-center justify-center rounded-md p-5 md:p-0`}>
-                    <div className='bg-white md:w-[50%] md:h-[50%] overflow-auto rounded-lg p-5 md:px-10'>
+                  <div className={`${!progressModal ? "hidden" : "block"} progress-modal absolute m-0 z-50 top-0 w-full h-full bg-[rgba(0,0,0,0.8)] flex items-center justify-center rounded-md sm:p-5 md:p-0`}>
+                    <div className='bg-white xl:w-[50%] xl:h-[50%] w-[90%] overflow-auto rounded-lg p-5 xl:px-10'>
                       <div className="tt flex justify-between text-gray-400 gap-2 items-end">
-                        <p className='md:text-xl text-nowrap'>Add your progress</p>
-                        <p className='text-nowrap'>As of today  <span className='text-gray-700 font-semibold '>{today} </span> </p>
+                        <p className='xl:text-xl text-nowrap'>Add your progress</p>
+                        <p className='text-nowrap'>As of today  <span className='text-gray-700 sm:font-semibold'>{today} </span> </p>
                       </div>
-                      <div className="top xl:flex gap-5 mt-5">
-                        <div className="weight w-full space-y-2">
-                          <label htmlFor='weight' className='h-full'>Add weight</label>
-                          <div className='h-[25vh] bg-gray-300 rounded flex justify-center items-center xl:px-5'>
-                            <input type="number" max={1000} id='weight' placeholder='0' className='w-[40%] bg-transparent border-none focus:ring-0 md:text-5xl text-2xl text-center' /> 
-                              <p className='md:text-2xl font-semibold italic text-gray-700'>Kg</p>
-                          </div>
+                      <div className="top sm:flex gap-5 mt-5">
+                        <div className="weight-in-picture w-full space-y-2">
+                          {/* <label htmlFor='weight-in-picture' className='h-full'>Add weight</label> */}
+                          <label htmlFor='weight-in-picture' className='space-y-2'>
+                            <p className='text-nowrap'>Add weight picture (from scale)</p>
+                            <div className='p-5 w-full h-[25vh] bg-gray-300 rounded flex justify-center items-center'>
+                              <ImFilePicture className='w-[50%] h-[50%]' />
+                            </div>
+                          </label>
+                          <input type="file" id='weight-in-picture' className='absolute z-0 top-0 opacity-0' />
+
                         </div>
-                        <div className="progress-picture relative w-full mt-2">
+                        <div className="progress-picture relative w-full sm:mt-0 mt-2">
                           <label htmlFor='picture' className='space-y-2'>
-                            <p>Add picture</p>
+                            <p className='text-nowrap'>Add picture (mirror picture)</p>
                               <div className='p-5 w-full h-[25vh] bg-gray-300 rounded flex justify-center items-center'>
                                 <ImFilePicture className='w-[50%] h-[50%]' />
                               </div>
@@ -428,7 +403,14 @@ const ClientWorkout = () => {
                           <input type="file" id='picture' className='absolute z-0 top-0 opacity-0' />
                         </div>
                       </div>
-                      <div className="bottom my-5">
+                      <div className="bottom my-5 md:space-y-5 space-y-2">
+                        <div>
+                          <label htmlFor='weight-in-number' className='text-gray-400 md:text-xl flex items-center gap-2'>Add weight in number</label>
+                          <div className='border rounded flex justify-start w-full items-center xl:px-5'>
+                            <input type="number" max={1000} id='weight-in-number' placeholder='0' className='w-fit bg-transparent border-none focus:ring-0 md:text-2xl text-xl text-center' /> 
+                            <p className='md:text-2xl font-semibold italic text-gray-700'>Kg</p>
+                          </div>
+                        </div>
                         <div>
                           <p className='text-gray-400 md:text-xl flex items-center gap-2'>Additional Note <MdOutlineNoteAlt className='italic' /></p>
                           <textarea name="additionalNote" id="" className='resize-none focus:ring-0 focus:border-black transition-all my-2 w-full h-[5vh] border-gray-200 rounded'></textarea>

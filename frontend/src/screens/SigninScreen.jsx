@@ -59,8 +59,8 @@ const SigninScreen = () => {
             {/* choose account */}
             {steps === 0 &&
             <div className='choose-account w-full transition-all my-5'>
-              <h3 className='mx-5 block md:text-center md:text-2xl font-semibold md:font-normal text-xl'>Choose your account type to signin.</h3>
-              <div className="accounts flex flex-wrap md:flex-nowrap justify-center gap-4 my-5">
+              <h3 className='md:mx-5 block md:text-center md:text-2xl font-semibold md:font-normal text-xl'>Choose your account type to signin.</h3>
+              <div className="accounts grid grid-cols-3 justify-center gap-4 my-5">
                 <div onClick={() => setSteps(1)} className="cursor-pointer hover:bg-transparent admin flex border bg-gradient-to-r  from-[rgba(0,0,0,0.8)] hover:to-[rgba(0,0,0,0.8)] to-[rgba(6,148,162,0.9)] hover:from-[rgba(6,148,162,0.9)] text-teal-500 hover:text-white duration-200 border-teal-500 md:w-full min-w-[100px] rounded p-5 transition-all">
                   <div >
                     <div className="icon flex justify-start">
@@ -88,7 +88,7 @@ const SigninScreen = () => {
               </div>
             </div>
             }
-              {steps !== 0 && <span onClick={() => setSteps(0)} className='cursor-pointer hover:underline transition-all flex items-center gap-2 text-teal-500 font-semibold text-sm'><FaArrowLeft /> Change account</span>}
+              {steps !== 0 && <span onClick={() => setSteps(0)} className='w-fit cursor-pointer hover:underline transition-all flex items-center gap-2 text-teal-500 font-semibold text-sm'><FaArrowLeft /> Change account</span>}
 
               {/* admin form component */}
               {steps === 1 && <AdminForm />}
