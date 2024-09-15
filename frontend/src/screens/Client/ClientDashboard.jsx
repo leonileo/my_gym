@@ -18,7 +18,7 @@ import { GiWeightScale } from "react-icons/gi";
 import { FaCheck, FaDumbbell, FaIdBadge, FaRegCalendarXmark, FaRegIdCard } from 'react-icons/fa6';
 import { LiaDumbbellSolid } from "react-icons/lia";
 import { IoBodyOutline } from "react-icons/io5";
-import { RiMailSendFill, RiProfileFill } from "react-icons/ri";
+import { RiMailSendFill } from "react-icons/ri";
 import { PiImageBroken } from "react-icons/pi";
 import { toast } from 'react-toastify';
 
@@ -33,6 +33,7 @@ import { MdAddAlarm, MdEmail, MdPhone, MdTimer, MdVerified } from 'react-icons/m
 import { Spinner, Tooltip } from 'flowbite-react';
 import { useSignoutMutation } from '../../slices/authApiSlice'
 import { logout } from '../../slices/authSlice';
+import { Autoplay } from 'swiper/modules';
 
 
 const ClientDashboard = () => {
@@ -55,7 +56,7 @@ const ClientDashboard = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [signout, {isLoading: signoutLoad}, error] = useSignoutMutation();
+  const [signout, {isLoading: signoutLoad}] = useSignoutMutation();
   // user infotmation
   const { userInfo } = useSelector((state) => state.auth)
   const name = userInfo.name;
@@ -64,9 +65,9 @@ const ClientDashboard = () => {
   // dummy data
 
   // weight info available
-  // const weight = [{weightBeforeTraining: "90 killo"}, {currentWeight: "72 killo"}, {plannedWeight: "60 killo"}];
+  const weight = [{weightBeforeTraining: "90 killo"}, {currentWeight: "72 killo"}, {plannedWeight: "60 killo"}];
   // weight info not available
-  const weight = null;
+  // const weight = null;
 
   const workouts = [ 
     {
@@ -192,18 +193,18 @@ const ClientDashboard = () => {
   ]
 
   // trainer info available
-  // const trainer = {
-  //   name: "Trainer 1",
-  //   sex: "Male",
-  //   picture: trainerPic,
-  //   email: "trainer1@email.com",
-  //   verifiedTrainer: true,
-  //   description: "I am trainer 1, a great trainer!",
-  //   serviceList: ["Yoga", "Weight loss", "Bulk", "Lifting"],
-  //   phoneNo: "0900000000",
-  // };
+  const trainer = {
+    name: "Trainer 1",
+    sex: "Male",
+    picture: trainerPic,
+    email: "trainer1@email.com",
+    verifiedTrainer: true,
+    description: "I am trainer 1, a great trainer!",
+    serviceList: ["Yoga", "Weight loss", "Bulk", "Lifting"],
+    phoneNo: "0900000000",
+  };
   // trainer info not available
-  const trainer = null;
+  // const trainer = null;
   // dummy data
 
   const logoutHandler = async () => {
@@ -212,8 +213,9 @@ const ClientDashboard = () => {
           await signout().unwrap();
           dispatch(logout());
           toast.success("Logout successfull!")
-          window.location.reload();
-          navigate('/signin')          
+          setTimeout(() => {
+            navigate('/signin')          
+          }, 1500);
       } catch (error) {
           toast.error(error?.data?.message || error.error);
       }
@@ -229,7 +231,113 @@ const ClientDashboard = () => {
       </div>
 
       {/* right side */}
-      <div className="right overflow-auto overflow-x-hidden w-full md: h-[100vh] xl:flex-row flex-col-reverse flex">
+      <div className="right overflow-auto overflow-x-hidden w-full h-[100vh] flex-col xl:flex-row-reverse flex">
+
+        <div className="rright xl:w-[25%] w-full md:border-l-4 p-5 ">
+          <div className="top">
+            <div className="clientinfo relative flex items-start justify-between">
+              <div className="txt ">
+                <h3 className='font-semibold capitalize truncate'>{time.toLocaleTimeString()}</h3>
+                <h3 className='text-sm text-gray-400 truncate'>{today}</h3>
+              </div>
+              <div className="relative">
+                <div onClick={() => setProfileNav(!profileNav)} className="cursor-pointer img ml-2 w-[50px] h-[50px] border border-teal-500 rounded-full">
+                  <img src={logoSm} alt="logo" className='h-full' />
+                </div>
+                {/* profile modal */}
+                {profileNav && (
+                  <div className="z-10 transition-all -bottom-26 right-0 profile modal border absolute bg-white rounded w-[150px] h-auto">
+                  <Link 
+                    to={'/client/profile'}
+                    className='cursor-pointer hover:bg-gray-100 transition-all w-full p-2 text-start flex items-center gap-5' 
+                    > 
+                      <button>Profile</button>
+                  </Link>
+                    <div className='p-2'>
+                      <hr className='w-full' />
+                    </div>
+                    <div onClick={logoutHandler} className='cursor-pointer hover:bg-gray-100 transition-all w-full p-2 text-start flex items-center gap-5'>
+                      <button className='flex gap-2 items-center'>Signout {signoutLoad && <Spinner />}</button>
+                      <GoSignOut />
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+            {/* for small screens */}
+            <div className="welcome-msg text-center md:hidden block my-2">
+              <p className=''>Welcome Back!</p>
+              <p className='font-semibold capitalize md:text-2xl'>{name}</p>
+            </div>
+            <div className="calendar py-5">
+              <h2 className='md:text-2xl flex gap-2 items-center mb-5'>Calendar <FaRegCalendarXmark/></h2>
+              <div className='flex justify-center '>
+                <DayPicker
+                className=' overflow-auto '
+                mode='single' 
+                selected={selected}
+                onSelect={setSelected}/>
+              </div>
+            </div>
+          </div>
+          <div className="bottom space-y-5">
+            <div className="weight checker">
+              <h2 className='md:text-2xl flex gap-2 items-center mb-5'>Weight progress <FaWeight/></h2>
+              {weight ? (
+                <div className="weightBox">
+                  <div className="t text-teal-500 flex gap-2 items-center justify-center">
+                    <div>
+                      <p className="cweight font-bold text-2xl block w-full text-center"><CountUp start={0}  end={weight[1].currentWeight.split(" ")[0]} duration={6} /> Killo</p>
+                      <div className="txt flex items-center gap-2"> <p> Current weight </p> <GiWeightLiftingUp /></div>
+                    </div>
+                  </div>
+                  <div className="b flex justify-around items-center p-5">
+                    <div className='beforeW text-gray-400 hover:text-black transition-all'>
+                      <p className="bweight font-bold text-2xl block w-full text-center"><CountUp start={0}  end={weight[0].weightBeforeTraining.split(" ")[0]} duration={6} /> Killo</p>
+                      <div className="flex gap-2 items-center"><p> Before training </p><GiWeightScale className='w-5 h-5' /></div>
+                    </div>
+                    <div className='goalW text-gray-400 hover:text-black transition-all'>
+                      <p className="gweight font-bold text-2xl block w-full text-center"><CountUp start={0}  end={weight[2].plannedWeight.split(" ")[0]} duration={6} /> Killo</p>
+                      <div className="flex gap-2 items-center"><p>Goal</p><GoGoal className='w-5 h-5' /></div>
+                    </div>
+                  </div>
+                </div>) 
+                : (
+                  <div>
+                    <div className="flex justify-center py-3">
+                      <ImFilesEmpty className='text-teal-500 w-[50px] h-[50px]' />
+                    </div>
+                    <p className='text-gray-500 text-center'>Weight information is empty! <br /> <Link to={'/client/profile'} className='hover:underline'> Update weight info</Link> </p> 
+                  </div>
+                )}
+            </div>
+            <div className="workouts">
+              <h2 className='md:text-2xl flex gap-2 items-center mb-5'>Today's workout <LiaDumbbellSolid /></h2>
+              {/* loop through today's workouts  */}
+              {trainer ? (
+                <div className="ws md:h-[40vh] h-[15vh] overflow-hidden overflow-y-auto">
+                  {workouts.map(workout => (
+                    <div className='w-full flex justify-between items-center bg-gray-200 rounded p-5 my-2 cursor-pointer hover:bg-gray-300 transition-all capitalize group'>
+                      <p className='flex gap-2 items-center truncate w-[200px]'>{workout.workoutName} <IoBodyOutline /></p>
+                      <span className='truncate text-gray-500 group-hover:bg-[rgba(6,148,162,0.5)] group-hover:text-white transition-all bg-gray-300 px-4 rounded-full text-sm'>{workout.workoutCategory}</span>
+                    </div>
+                  ))}
+                </div>
+              ) 
+              : (
+                <div className='w-full h-[25vh] bg-gray-200 rounded text-center p-5 flex justify-center items-center md:mb-0 mb-5'>
+                  <div>
+                    <div className="flex justify-center">
+                      <PiImageBroken className='w-28 h-28' />
+                    </div>
+                    <p>Workout data will be available here after your trainer assign you one.</p>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+
         <div className="rmiddle p-5 xl:w-[75%] w-full">
           <div className="top md:my-5 w-full">
             {/* for desktops */}
@@ -239,20 +347,57 @@ const ClientDashboard = () => {
             </div>
             {trainer ? (
               <div className="today-workouts-completed flex justify-center w-full">
-                {/* for desktops */}
-                <div className='hidden md:block w-full'>
-                  <Swiper
-                    slidesPerView={2}
-                    spaceBetween={30}
-                    freeMode={true}
-                    pagination={{
-                      clickable: true,
-                    }}
-                    className={`w-full min-h-[20vh] h-auto my-5`}
-                  >
-                  {/* loop through completed workouts */}
-                  {workouts.map(completed => (
-                    <SwiperSlide className='h-full'>
+                <div className='w-full my-5'>
+                  <h2 className='md:text-3xl text-xl text-gray-600'>Today's completed workouts</h2>
+                  {/* for desktops */}
+                  <div className='hidden md:block w-full'>
+                    <Swiper
+                      slidesPerView={2}
+                      spaceBetween={30}
+                      autoplay={{
+                        delay: 2500,
+                        disableOnInteraction: false,
+                      }}
+                      modules={[Autoplay]}
+                      className={`w-full min-h-[20vh] h-auto my-5`}
+                    >
+                    {/* loop through completed workouts */}
+                    {workouts.map(completed => (
+                      <SwiperSlide className='h-full'>
+                        <div 
+                        style={{
+                          backgroundImage: `linear-gradient(45deg, rgba(255, 255, 255, .1), rgba(6, 148, 162, 1)), url(${gymImg})`,
+                          backgroundRepeat: "no-repeat",
+                          backgroundSize: "cover",
+                          backgroundPosition: "center",
+                        }}
+                        className='p-4 img rounded mb-3 h-[250px]'>
+                          <p className='bg-[rgba(255,255,255,0.8)] w-fit p-2 rounded capitalize'>{completed.workoutName}</p>
+                        </div>
+                        <div className="details flex justify-start gap-5">
+                          <p className={`p-2 px-3 text-nowrap text-sm text-gray-500 bg-gray-200 rounded flex items-center gap-2`}><MdTimer/> {completed.workoutDuration}</p>
+                          <p className={`p-2 px-3 text-nowrap text-sm text-gray-500 bg-gray-200 rounded flex items-center gap-2`}><FaDumbbell/> {completed.workoutCategory}</p>
+                          <p className={`p-2 px-3 text-nowrap text-sm text-gray-500  rounded ${completed.equipmentRequired ? "bg-teal-500 text-white": "bg-gray-400 text-white" }`}>{completed.equipmentRequired ? <p className='flex items-center gap-2'>Equipment required <FaCheck /> </p> : "No equipment is required. "}</p>
+                        </div>
+                      </SwiperSlide>
+                    ))}
+                    </Swiper>
+                  </div>
+                  {/* for small screen */}
+                  <div className='md:hidden block w-full'>
+                    <Swiper
+                      slidesPerView={1}
+                      spaceBetween={30}
+                      autoplay={{
+                        delay: 2500,
+                        disableOnInteraction: false,
+                      }}
+                      modules={[Autoplay]}
+                      className={`w-full min-h-[20vh] h-auto my-5 md:hidden block`}
+                      >
+                    {/* loop through completed workouts */}
+                    {workouts.map(completed => (
+                      <SwiperSlide className='h-full'>
                       <div 
                       style={{
                         backgroundImage: `linear-gradient(45deg, rgba(255, 255, 255, .1), rgba(6, 148, 162, 1)), url(${gymImg})`,
@@ -263,47 +408,15 @@ const ClientDashboard = () => {
                       className='p-4 img rounded mb-3 h-[250px]'>
                         <p className='bg-[rgba(255,255,255,0.8)] w-fit p-2 rounded capitalize'>{completed.workoutName}</p>
                       </div>
-                      <div className="details flex justify-start gap-5">
+                      <div className="details flex justify-start gap-5 overflow-hidden">
                         <p className={`p-2 px-3 text-nowrap text-sm text-gray-500 bg-gray-200 rounded flex items-center gap-2`}><MdTimer/> {completed.workoutDuration}</p>
                         <p className={`p-2 px-3 text-nowrap text-sm text-gray-500 bg-gray-200 rounded flex items-center gap-2`}><FaDumbbell/> {completed.workoutCategory}</p>
                         <p className={`p-2 px-3 text-nowrap text-sm text-gray-500  rounded ${completed.equipmentRequired ? "bg-teal-500 text-white": "bg-gray-400 text-white" }`}>{completed.equipmentRequired ? <p className='flex items-center gap-2'>Equipment required <FaCheck /> </p> : "No equipment is required. "}</p>
                       </div>
                     </SwiperSlide>
-                  ))}
-                  </Swiper>
-                </div>
-                {/* for small screen */}
-                <div className='md:hidden block w-full'>
-                  <Swiper
-                    slidesPerView={1}
-                    spaceBetween={30}
-                    freeMode={true}
-                    pagination={{
-                      clickable: true,
-                    }}
-                    className={`w-full min-h-[20vh] h-auto my-5 md:hidden block`}
-                    >
-                  {/* loop through completed workouts */}
-                  {workouts.map(completed => (
-                    <SwiperSlide className='h-full'>
-                    <div 
-                    style={{
-                      backgroundImage: `linear-gradient(45deg, rgba(255, 255, 255, .1), rgba(6, 148, 162, 1)), url(${gymImg})`,
-                      backgroundRepeat: "no-repeat",
-                      backgroundSize: "cover",
-                      backgroundPosition: "center",
-                    }}
-                    className='p-4 img rounded mb-3 h-[250px]'>
-                      <p className='bg-[rgba(255,255,255,0.8)] w-fit p-2 rounded capitalize'>{completed.workoutName}</p>
-                    </div>
-                    <div className="details flex justify-start gap-5 overflow-hidden">
-                      <p className={`p-2 px-3 text-nowrap text-sm text-gray-500 bg-gray-200 rounded flex items-center gap-2`}><MdTimer/> {completed.workoutDuration}</p>
-                      <p className={`p-2 px-3 text-nowrap text-sm text-gray-500 bg-gray-200 rounded flex items-center gap-2`}><FaDumbbell/> {completed.workoutCategory}</p>
-                      <p className={`p-2 px-3 text-nowrap text-sm text-gray-500  rounded ${completed.equipmentRequired ? "bg-teal-500 text-white": "bg-gray-400 text-white" }`}>{completed.equipmentRequired ? <p className='flex items-center gap-2'>Equipment required <FaCheck /> </p> : "No equipment is required. "}</p>
-                    </div>
-                  </SwiperSlide>
-                  ))}
-                  </Swiper>
+                    ))}
+                    </Swiper>
+                  </div>
                 </div>
               </div>
             ) 
@@ -436,110 +549,7 @@ const ClientDashboard = () => {
           </div>
         </div>
 
-        <div className="rright xl:w-[25%] w-full md:border-l-4 p-5 ">
-          <div className="top">
-            <div className="clientinfo relative flex items-start justify-between">
-              <div className="txt ">
-                <h3 className='font-semibold capitalize truncate'>{time.toLocaleTimeString()}</h3>
-                <h3 className='text-sm text-gray-400 truncate'>{today}</h3>
-              </div>
-              <div className="relative">
-                <div onClick={() => setProfileNav(!profileNav)} className="img ml-2 w-[50px] h-[50px] border border-teal-500 rounded-full">
-                  <img src={logoSm} alt="" className='h-full' />
-                </div>
-                {/* profile modal */}
-                {profileNav && (
-                  <div className="transition-all -bottom-26 right-0 profile modal border absolute bg-white rounded w-[150px] h-auto">
-                  <Link 
-                    to={'/client/profile'}
-                    className='cursor-pointer hover:bg-gray-100 transition-all w-full p-2 text-start flex items-center gap-5' 
-                    > 
-                      <button>Profile</button>
-                  </Link>
-                    <div className='p-2'>
-                      <hr className='w-full' />
-                    </div>
-                    <div onClick={logoutHandler} className='cursor-pointer hover:bg-gray-100 transition-all w-full p-2 text-start flex items-center gap-5'>
-                      <button className='flex gap-2 items-center'>Signout {signoutLoad && <Spinner />}</button>
-                      <GoSignOut />
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-            {/* for small screens */}
-            <div className="welcome-msg text-center md:hidden block my-2">
-              <p className=''>Welcome Back!</p>
-              <p className='font-semibold capitalize md:text-2xl'>{name}</p>
-            </div>
-            <div className="calendar py-5">
-              <h2 className='md:text-2xl flex gap-2 items-center mb-5'>Calendar <FaRegCalendarXmark/></h2>
-              <div className='flex justify-center '>
-                <DayPicker
-                className=' overflow-auto '
-                mode='single' 
-                selected={selected}
-                onSelect={setSelected}/>
-              </div>
-            </div>
-          </div>
-          <div className="bottom space-y-5">
-            <div className="weight checker">
-              <h2 className='md:text-2xl flex gap-2 items-center mb-5'>Weight progress <FaWeight/></h2>
-              {weight ? (
-                <div className="weightBox">
-                  <div className="t text-teal-500 flex gap-2 items-center justify-center">
-                    <div>
-                      <p className="cweight font-bold text-2xl block w-full text-center"><CountUp start={0}  end={weight[1].currentWeight.split(" ")[0]} duration={6} /> Killo</p>
-                      <div className="txt flex items-center gap-2"> <p> Current weight </p> <GiWeightLiftingUp /></div>
-                    </div>
-                  </div>
-                  <div className="b flex justify-around items-center p-5">
-                    <div className='beforeW text-gray-400 hover:text-black transition-all'>
-                      <p className="bweight font-bold text-2xl block w-full text-center"><CountUp start={0}  end={weight[0].weightBeforeTraining.split(" ")[0]} duration={6} /> Killo</p>
-                      <div className="flex gap-2 items-center"><p> Before training </p><GiWeightScale className='w-5 h-5' /></div>
-                    </div>
-                    <div className='goalW text-gray-400 hover:text-black transition-all'>
-                      <p className="gweight font-bold text-2xl block w-full text-center"><CountUp start={0}  end={weight[2].plannedWeight.split(" ")[0]} duration={6} /> Killo</p>
-                      <div className="flex gap-2 items-center"><p>Goal</p><GoGoal className='w-5 h-5' /></div>
-                    </div>
-                  </div>
-                </div>) 
-                : (
-                  <div>
-                    <div className="flex justify-center py-3">
-                      <ImFilesEmpty className='text-teal-500 w-[50px] h-[50px]' />
-                    </div>
-                    <p className='text-gray-500 text-center'>Weight information is empty! <br /> <Link to={'/client/profile'} className='hover:underline'> Update weight info</Link> </p> 
-                  </div>
-                )}
-            </div>
-            <div className="workouts">
-              <h2 className='md:text-2xl flex gap-2 items-center mb-5'>Today's workout <LiaDumbbellSolid /></h2>
-              {/* loop through today's workouts  */}
-              {trainer ? (
-                <div className="ws md:h-[40vh] h-[15vh] overflow-hidden overflow-y-auto">
-                  {workouts.map(workout => (
-                    <div className='w-full flex justify-between items-center bg-gray-200 rounded p-5 my-2 cursor-pointer hover:bg-gray-300 transition-all capitalize group'>
-                      <p className='flex gap-2 items-center truncate w-[200px]'>{workout.workoutName} <IoBodyOutline /></p>
-                      <span className='truncate text-gray-500 group-hover:bg-[rgba(6,148,162,0.5)] group-hover:text-white transition-all bg-gray-300 px-4 rounded-full text-sm'>{workout.workoutCategory}</span>
-                    </div>
-                  ))}
-                </div>
-              ) 
-              : (
-                <div className='w-full h-[25vh] bg-gray-200 rounded text-center p-5 flex justify-center items-center md:mb-0 mb-5'>
-                  <div>
-                    <div className="flex justify-center">
-                      <PiImageBroken className='w-28 h-28' />
-                    </div>
-                    <p>Workout data will be available here after your trainer assign you one.</p>
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
+
 
       </div>
     </div>
