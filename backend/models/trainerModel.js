@@ -13,7 +13,11 @@ const trainerSchema = new mongoose.Schema({
     picture: {type: String},
     verifiedTrainer: {type: Boolean},
     description: {type: String},
-    serviceList: {type: Array},
+    serviceList: [{
+        servicePicture: {type: String},
+        serviceName: {type: String},
+        serviceDescription: {type: String}
+    }],
     email: {type: String, unique: true},
     phoneNo: {type: Number, unique: true},
     password: {type: String},
