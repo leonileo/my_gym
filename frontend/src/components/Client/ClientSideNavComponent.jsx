@@ -53,7 +53,7 @@ const ClientSideNavComponent = ({ clpsd ,setClpsd, step }) => {
             </div>
         </div>
         <div className="account grid items-end">
-            <Link to="/client/profile" className={`px-5 flex gap-4 items-center p-2 hover:bg-gray-50 relative border border-transparent border-r-2  ${step === 4 ? "border-r-black" : "border-r-transparent text-gray-400"} hover:border-r-teal-500 hover:text-teal-500 `}>
+            <Link to="/client/profile" className={`md:px-5 flex gap-4 items-center p-2 hover:bg-gray-50 relative border border-transparent border-r-2  ${step === 4 ? "border-r-black" : "border-r-transparent text-gray-400"} hover:border-r-teal-500 hover:text-teal-500 `}>
                 <div className={`link flex items-center ${clpsd && 'justify-center'} justify-center ${!clpsd && 'md:justify-start'} gap-3 w-full`}>
                     <Tooltip content='Profile'>
                         <MdOutlineManageAccounts className='w-5 h-5 cursor-pointer' />
