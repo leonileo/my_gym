@@ -1,6 +1,6 @@
 // DATA SCHEMA
 // trainerModel.js
-// Imort necessary modules
+// Import necessary modules
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt')
 
@@ -9,19 +9,22 @@ const trainerSchema = new mongoose.Schema({
     firstName: {type: String},
     fatherName: {type: String, unique: true},
     sex: {type: String},
-    clients: {type: Array},
+    DOB: {type: Date},
+    clients: [{
+        client: {type: mongoose.Schema.Types.ObjectId, required: true, ref: "Client"},
+    }],
     picture: {type: String},
-    verifiedTrainer: {type: Boolean},
+    verifiedTrainer: {type: Boolean, default: false},
     description: {type: String},
     serviceList: [{
-        servicePicture: {type: String},
-        serviceName: {type: String},
-        serviceDescription: {type: String}
+        service: {type: mongoose.Schema.Types.ObjectId, required: true, ref: "Service"},
     }],
     email: {type: String, unique: true},
     phoneNo: {type: Number, unique: true},
     password: {type: String},
-    myWorkouts: {type: Array},
+    myWorkouts: [{
+        workout: {type: mongoose.Schema.Types.ObjectId, required: true, ref: "Workout"},
+    }],
     isAccountFrozen: {type: Boolean, default: false},
     isAdmin: {type: Boolean, default: false},
     isTrainer: {type: Boolean, default: true},
