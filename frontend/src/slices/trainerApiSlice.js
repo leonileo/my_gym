@@ -5,7 +5,7 @@ export const trainerApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         dashboard: builder.query({
             query: () => ({
-                url: `${TRAINER_URL}`
+                url: `${TRAINER_URL}/dashboard`
             })
         }),
         getClients: builder.query({
@@ -23,6 +23,26 @@ export const trainerApiSlice = apiSlice.injectEndpoints({
                 url: `${TRAINER_URL}/workout`
             })
         }),
+        createService: builder.mutation({
+            query: (data) => ({
+                url: `${TRAINER_URL}/service-list`,
+                method: "POST",
+                body: data
+            })
+        }),
+        updateService: builder.mutation({
+            query: (data) => ({
+                url: `${TRAINER_URL}/service-list/${data.serviceId}`,
+                method: 'PUT',
+                body: data
+            })
+        }),
+        deleteService: builder.mutation({
+            query: (serviceId) => ({
+                url: `${TRAINER_URL}/service-list/${serviceId}`,
+                method: "DELETE"
+            })
+        }),
         createWorkout: builder.mutation({
             query: (data) => ({
                 url: `${TRAINER_URL}/workout`,
@@ -32,20 +52,36 @@ export const trainerApiSlice = apiSlice.injectEndpoints({
         }),
         updateWorkout: builder.mutation({
             query: (data) => ({
-                url: `${TRAINER_URL}/workout`,
+                url: `${TRAINER_URL}/workout/${data.workoutId}`,
                 method: 'PUT',
                 body: data
-            })
-        }),
-        getSpecificWorkout: builder.query({
-            query: (workoutId) => ({
-                url: `${TRAINER_URL}/workout/${workoutId}`
             })
         }),
         deleteWorkout: builder.mutation({
             query: (workoutId) => ({
                 url: `${TRAINER_URL}/workout/${workoutId}`,
                 method: 'DELETE',
+            })
+        }),
+        getClientProgress: builder.mutation({
+            query: (data) => ({
+                url: `${TRAINER_URL}/client-progress`,
+                method: 'POST',
+                body: data
+            })
+        }),
+        assignWorkout: builder.mutation({
+            query: (data) => ({
+                url: `${TRAINER_URL}/assign-workout`,
+                method: 'PUT',
+                body: data
+            })
+        }),
+        removeAssignedWorkout: builder.mutation({
+            query: (data) => ({
+                url: `${TRAINER_URL}/remove-assigned-workout`,
+                method: 'PUT',
+                body: data
             })
         }),
         getClientRequest: builder.query({
@@ -82,10 +118,17 @@ export const trainerApiSlice = apiSlice.injectEndpoints({
                 url: `${TRAINER_URL}/profile`
             })
         }),
-        updateProfile: builder.query({
+        updateProfile: builder.mutation({
             query: (data) => ({
                 url: `${TRAINER_URL}/profile`,
                 method: 'PUT',
+                body: data
+            })
+        }),
+        uploadTrainerImage: builder.mutation({
+            query: (data) => ({
+                url: `/apiv1/upload`,
+                method: 'POST',
                 body: data
             })
         })
@@ -97,15 +140,21 @@ export const {
     useGetClientsQuery,
     useGetServiceQuery,
     useGetWorkoutQuery,
+    useCreateServiceMutation,
+    useUpdateServiceMutation,
+    useDeleteServiceMutation,
     useCreateWorkoutMutation,
     useUpdateWorkoutMutation,
-    useGetSpecificWorkoutQuery,
     useDeleteWorkoutMutation,
     useGetClientRequestQuery,
+    useGetClientProgressMutation,
+    useAssignWorkoutMutation,
+    useRemoveAssignedWorkoutMutation,
     useUpdateClientRequestMutation,
     useGetChatsQuery,
     useGetSpecificChatQuery,
     useAddChatQuery,
     useGetProfileQuery,
-    useUpdateProfileQuery
+    useUpdateProfileMutation,
+    useUploadTrainerImageMutation
 } = trainerApiSlice;
