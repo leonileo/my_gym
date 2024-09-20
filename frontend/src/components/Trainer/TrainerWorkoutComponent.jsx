@@ -2,10 +2,10 @@ import React from 'react'
 import { FaCheck, FaDumbbell } from 'react-icons/fa6'
 import { MdTimer } from 'react-icons/md'
 
-const TrainerWorkoutComponent = ({ stepHandler, trainerId, workoutName, workoutCategory, workoutDescription, workoutPicture, workoutVideoLink, workoutDuration, workoutSteps, equipmentRequired, equipmentList
+const TrainerWorkoutComponent = ({ stepHandler, workoutId, workoutName, workoutCategory, workoutDescription, workoutPicture, workoutVideoLink, workoutDuration, workoutSteps, equipmentRequired, equipmentList
 }) => {
   return (
-        <div className='bg-gray-50 border rounded sm:h-[35vh] h-[45vh]' onClick={() =>stepHandler(trainerId, workoutName, workoutCategory, workoutDescription, workoutPicture, workoutVideoLink, workoutDuration, workoutSteps, equipmentRequired, equipmentList)} >
+        <div className='bg-gray-50 border rounded sm:h-[35vh] h-[45vh]' onClick={() =>stepHandler(workoutId, workoutName, workoutCategory, workoutDescription, workoutPicture, workoutVideoLink, workoutDuration, workoutSteps, equipmentRequired, equipmentList)} >
           <div className='h-full rounded-b overflow-auto'>
             <div 
               style={{
