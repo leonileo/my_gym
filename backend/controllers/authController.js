@@ -45,20 +45,30 @@ const signinTrainer = asyncHandler( async(req, res) => {
     try {
         const trainer = await Trainer.findOne({ email });
         
-        if (trainer && (await trainer.matchPassword(password)) ) {
-            generateTokenTrainer(res, trainer._id);
+        if (trainer) {
+            if (trainer.isAccountFrozen) {
+                res.status(501);
+                throw new Error('Accesss denied!');
+            } else {
+                if (trainer && (await trainer.matchPassword(password)) ) {
+                    generateTokenTrainer(res, trainer._id);
 
-            res.status(200).json({
-                _id: trainer._id,
-                name: `${trainer.firstName} ${trainer.fatherName}`,
-                email: trainer.email,
-                isAdmin: trainer.isAdmin,
-                isTrainer: trainer.isTrainer,
-                isClient: trainer.isClient,
-            })
+                    res.status(200).json({
+                        _id: trainer._id,
+                        name: `${trainer.firstName} ${trainer.fatherName}`,
+                        email: trainer.email,
+                        isAdmin: trainer.isAdmin,
+                        isTrainer: trainer.isTrainer,
+                        isClient: trainer.isClient,
+                    })
+                } else {
+                    res.status(401);
+                    throw new Error('Invalid email or password')
+                }
+            }
         } else {
-            res.status(401);
-            throw new Error('Invalid email or password')
+            res.status(404);
+            throw new Error('Trainer not found');
         }
     } catch (error) {
         throw new Error(error);
@@ -242,6 +252,8 @@ const signupClient = asyncHandler( async (req, res) => {
                     
                     if (client) {
                         generateTokenClient(res, client._id);
+                        const newP = await Progress.findOneAndUpdate({clientId: clientId}, {client: client._id})
+                        newP.save()
                         res.status(201).json({
                             _id: client._id,
                             name: `${client.firstName} ${client.fatherName}`,
