@@ -2,34 +2,46 @@
 // trainerRoute.js
 // Import necessary modules
 const express = require('express');
-const { protect, trainer } = require('../middleware/authMiddleware.js');
-const { dashboard, getClients, getService, getWorkout, createWorkout, getClientRequest, updateClientRequest, updateWorkout, getSpecificWorkout, deleteWorkout, getChats, getSpecificChat, addChat, getProfile, updateProfile } = require('../controllers/trainerController.js')
+const { protectTrainer, trainer } = require('../middleware/authMiddleware.js');
+const { dashboard, getClients, getService, getWorkout, createWorkout, getClientRequest, updateClientRequest, updateWorkout, deleteWorkout, getChats, getSpecificChat, addChat, getProfile, updateProfile, createService, updateService, deleteService, getClientProgress, assignWorkout, removeAssignedWorkout } = require('../controllers/trainerController.js')
 
 const router = express.Router();
 
-router.get('/dashboard', protect, trainer, dashboard)
-router.get('/my-clients', protect, trainer, getClients)
-router.get('/service-list', protect, trainer, getService)
+router.get('/dashboard', protectTrainer, trainer, dashboard)
+router.get('/my-clients',  protectTrainer, trainer, getClients)
+router.route('/service-list')
+.get( protectTrainer, trainer, getService)
+.post( protectTrainer, trainer, createService)
+router.route('/service-list/:id')
+.put( protectTrainer, trainer, updateService)
+.delete( protectTrainer, trainer, deleteService)
+
 router.route('/workout')
-.get(protect, trainer, getWorkout)
-.post(protect, trainer, createWorkout)
+.get( protectTrainer, trainer, getWorkout)
+.post( protectTrainer, trainer, createWorkout)
 
 router.route('/client-request')
-.get(protect, trainer, getClientRequest)
-.put(protect, trainer, updateClientRequest)
+.get( protectTrainer, trainer, getClientRequest)
+router.route('/client-progress/')
+.post( protectTrainer, trainer, getClientProgress)
+router.route('/assign-workout')
+.put( protectTrainer, trainer, assignWorkout)
+router.route('/remove-assigned-workout')
+.put( protectTrainer, trainer, removeAssignedWorkout)
+router.route('/client-request/:id')
+.put( protectTrainer, trainer, updateClientRequest)
 
 router.route('/workout/:id')
-.get(protect, trainer, getSpecificWorkout)
-.put(protect, trainer, updateWorkout)
-.delete(protect, trainer, deleteWorkout)
+.put( protectTrainer, trainer, updateWorkout)
+.delete( protectTrainer, trainer, deleteWorkout)
 
-router.get('/chat', protect, trainer, getChats)
+router.get('/chat',  protectTrainer, trainer, getChats)
 router.route('/chat/:id')
-.get(protect, trainer, getSpecificChat)
-.post(protect, trainer, addChat)
+.get( protectTrainer, trainer, getSpecificChat)
+.post( protectTrainer, trainer, addChat)
 router.route('/profile')
-.get(protect, trainer, getProfile)
-.put(protect, trainer, updateProfile)
+.get( protectTrainer, trainer, getProfile)
+.put( protectTrainer, trainer, updateProfile)
 
 
 module.exports = router;
