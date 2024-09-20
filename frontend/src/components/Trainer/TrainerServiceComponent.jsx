@@ -1,8 +1,9 @@
 import React from 'react'
 import { CgTrash } from 'react-icons/cg'
+import { FaEye } from 'react-icons/fa6'
 import { MdOutlineEdit } from 'react-icons/md'
 
-const TrainerServiceComponent = ({ servicePicture, serviceName, serviceDescription, id, setCurrId, currId }) => {
+const TrainerServiceComponent = ({ servicePicture, serviceName, serviceDescription, id, setCurrId, currId, setModal, setServiceName, setServiceDescription, setPicture, setServiceId, serviceId }) => {
   return (
     <div className='border bg-gray-50 rounded p-5 space-y-5'>
       <div className='top flex gap-5 items-start'>
@@ -23,8 +24,25 @@ const TrainerServiceComponent = ({ servicePicture, serviceName, serviceDescripti
             {/* action modal */}
             {id === currId &&
               <div className="actmodal absolute bg-gray-50 border top-0 right-3 transition-all rounded w-[200px]">
-                <button onClick={() => setCurrId('')} className='w-full flex gap-2 items-center hover:bg-gray-100 hover:text-teal-500 transition-all p-2'>Delete service<CgTrash /></button>
-                <button onClick={() => setCurrId('')} className='w-full flex gap-2 items-center hover:bg-gray-100 hover:text-teal-500 transition-all p-2'>Update service<MdOutlineEdit /></button>
+                <button onClick={() => {  
+                  setServiceName(serviceName)
+                  setServiceDescription(serviceDescription)
+                  setPicture(servicePicture)
+                  setModal(3); setCurrId('')
+                }} className='w-full flex gap-2 items-center hover:bg-gray-100 hover:text-teal-500 transition-all p-2'>Preview <FaEye /></button>
+                <button onClick={() => {
+                  setServiceName(serviceName)
+                  setModal(4);
+                  setServiceId(serviceId);
+                  setCurrId('')
+                }} className='w-full flex gap-2 items-center hover:bg-gray-100 hover:text-teal-500 transition-all p-2'>Delete service<CgTrash /></button>
+                <button onClick={() => {
+                  setServiceId(serviceId)
+                  setServiceName(serviceName)
+                  setServiceDescription(serviceDescription)
+                  setPicture(servicePicture)
+                  setModal(5); setCurrId('')
+                }} className='w-full flex gap-2 items-center hover:bg-gray-100 hover:text-teal-500 transition-all p-2'>Update service<MdOutlineEdit /></button>
               </div>
               }
           </div>
