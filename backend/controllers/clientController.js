@@ -2,6 +2,7 @@
 // Import necessary modules
 const asyncHandler = require("../middleware/asyncHandler.js");
 const Client = require('../models/clientModel.js');
+const Progress = require("../models/progressModel.js");
 
 // @desc    Return the client dashboard
 // @route   GET /apiv1/client/dashboard
@@ -21,7 +22,30 @@ const getWorkouts = asyncHandler( async(req, res) => {
 // @route   PUT /apiv1/client/workout/:id
 // @access  Private
 const updateWorkout = asyncHandler( async(req, res) => {
-    res.json("Client - update workout");
+    const { workoutId } = req.body;
+
+    const pr = await Progress.findOne({progressId: req.params.id}).populate("progress.workout", "workoutName")
+    const workoutIndex = pr.progress.findIndex(workout => 
+        workout.workout && workout.workout._id.toString() === workoutId
+    )
+
+    if (workoutIndex !== -1) {
+        pr.progress[workoutIndex] 
+        = {
+            workout: req.body.workout || pr.progress[workoutIndex].workout,
+            clientPicture: req.body.clientPicture || pr.progress[workoutIndex].clientPicture,
+            weightInPicture: req.body.weightInPicture || pr.progress[workoutIndex].weightInPicture,
+            weightInNumber: req.body.weightInNumber || pr.progress[workoutIndex].weightInNumber,
+            isWorkoutDone: req.body.isWorkoutDone || pr.progress[workoutIndex].isWorkoutDone,
+            progressDate: req.body.progressDate || pr.progress[workoutIndex].progressDate,
+            notes: req.body.notes || pr.progress[workoutIndex].notes
+        };
+    await pr.save().then(res => console.log(res));
+
+    } else {
+        throw new Error('Workout not found');
+    }
+
 })
 
 // @desc    Return chat for a clients
