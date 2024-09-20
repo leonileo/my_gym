@@ -2,20 +2,20 @@
 // adminRoute.js
 // Import necessary modules
 const express = require('express');
-const { protect, admin } = require('../middleware/authMiddleware.js');
+const { protectAdmin, admin } = require('../middleware/authMiddleware.js');
 const { dashboard, getClients, getTrainers, getChat, addChat, getProfile, updateProfile } = require('../controllers/adminController.js');
 
 const router = express.Router();
 
-router.get('/dashboard', protect, admin, dashboard)
-router.get('/clients', protect, admin, getClients)
-router.get('/trainers', protect, admin, getTrainers)
-router.get('/chat', protect, admin, getChat)
+router.get('/dashboard', protectAdmin, admin, dashboard)
+router.get('/clients', protectAdmin, admin, getClients)
+router.get('/trainers', protectAdmin, admin, getTrainers)
+router.get('/chat', protectAdmin, admin, getChat)
 router.route('/chat/:id')
-.get(protect, admin, getChat)
-.post(protect, admin, addChat)
+.get(protectAdmin, admin, getChat)
+.post(protectAdmin, admin, addChat)
 router.route('/profile')
-.get( protect, admin, getProfile)
-.put( protect, admin, updateProfile)
+.get( protectAdmin, admin, getProfile)
+.put( protectAdmin, admin, updateProfile)
 
 module.exports = router;
