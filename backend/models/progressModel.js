@@ -7,13 +7,13 @@ const progressSchema = new mongoose.Schema({
     progressId: {type: String, required: true, unique: true},
     clientId: {type: String, required: true, unique: true},
     progress: [{
-        workout: {type: mongoose.Schema.Types.ObjectId, ref: "Workout"},
-        clientPicture: {type: String},
-        weightInPicture: {type: String},
-        weightInNumber: {type: Number},
+        workout: {type: mongoose.Schema.Types.ObjectId, ref: "Workout", unique: true},
+        clientPicture: {type: String, default: ''},
+        weightInPicture: {type: String, default: ''},
+        weightInNumber: {type: String},
         isWorkoutDone: {type: Boolean, default: false},
-        progressDate: {type: Date},
-        notes: {type: String}
+        progressDate: {type: Date, default: Date.now(), unique: true},
+        notes: {type: String, default: ''}
     }]
 }, {timestamps: true});
 
