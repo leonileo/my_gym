@@ -26,6 +26,7 @@ const signinAdmin = asyncHandler( async(req, res) => {
                 isAdmin: admin.isAdmin,
                 isTrainer: admin.isTrainer,
                 isClient: admin.isClient,
+                picture: admin.picture,
             })
         } else {
             res.status(401);
@@ -60,6 +61,7 @@ const signinTrainer = asyncHandler( async(req, res) => {
                         isAdmin: trainer.isAdmin,
                         isTrainer: trainer.isTrainer,
                         isClient: trainer.isClient,
+                        picture: trainer.picture,
                     })
                 } else {
                     res.status(401);
@@ -94,6 +96,7 @@ const signinClient = asyncHandler( async(req, res) => {
                 isAdmin: client.isAdmin,
                 isTrainer: client.isTrainer,
                 isClient: client.isClient,
+                picture: client.picture,
             })
         } else {
             res.status(401);
