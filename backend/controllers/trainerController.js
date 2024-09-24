@@ -24,12 +24,12 @@ const dashboard = asyncHandler( async(req, res) => {
     if (trainer) {
         if (trainer.isAccountFrozen) {
             res.status(501);
-            throw new Error('Accesss denied!');
+            throw new Error('Access denied!');
         } else {
 
             // status: clients, requests, services, and workouts
             const clients = await Client.find({trainerId : trainer.trainerId}).select('-password');
-            const requests = await Request.find({trainerId: trainer.trainerId});
+            const requests = await Request.find({trainerId: trainer.trainerId, Approved: false}).populate('client', 'firstName fatherName picture');
             const services = await Service.find({trainerId: trainer.trainerId});
             const workouts = await Workout.find({trainerId: trainer.trainerId}); 
             
@@ -87,7 +87,7 @@ const getClients = asyncHandler( async(req, res) => {
     if (trainer) {
         if (trainer.isAccountFrozen) {
             res.status(501);
-            throw new Error('Accesss denied!');
+            throw new Error('Access denied!');
         } else {
             const clients = await Client.find({trainerId : trainer.trainerId}).select('-password');
 
@@ -116,7 +116,7 @@ const getService = asyncHandler( async(req, res) => {
     if (trainer) {
         if (trainer.isAccountFrozen) {
             res.status(501);
-            throw new Error('Accesss denied!');
+            throw new Error('Access denied!');
         } else {
             const services = await Service.find({trainerId : trainer.trainerId});
 
@@ -146,7 +146,7 @@ const getWorkout = asyncHandler( async(req, res) => {
     if (trainer) {
         if (trainer.isAccountFrozen) {
             res.status(501);
-            throw new Error('Accesss denied!');
+            throw new Error('Access denied!');
         } else {
             const workouts = await Workout.find({trainerId : trainer.trainerId});
 
@@ -177,7 +177,7 @@ const createService = asyncHandler( async(req, res) => {
     if (trainer) {
         if (trainer.isAccountFrozen) {
             res.status(501);
-            throw new Error('Accesss denied!');
+            throw new Error('Access denied!');
         } else {
             const { servicePicture, serviceName, serviceDescription } = req.body;
             const trainerId = trainer.trainerId
@@ -224,7 +224,7 @@ const updateService = asyncHandler( async(req, res) => {
     if (trainer) {
         if (trainer.isAccountFrozen) {
             res.status(501);
-            throw new Error('Accesss denied!');
+            throw new Error('Access denied!');
         } else {
             const { servicePicture, serviceName, serviceDescription } = req.body;
 
@@ -271,7 +271,7 @@ const deleteService = asyncHandler( async(req, res) => {
     if (trainer) {
         if (trainer.isAccountFrozen) {
             res.status(501);
-            throw new Error('Accesss denied!');
+            throw new Error('Access denied!');
         } else {
             const service = await Service.findById(req.params.id);
             const trainerId = trainer.trainerId;
@@ -322,7 +322,7 @@ const createWorkout = asyncHandler( async(req, res) => {
     if (trainer) {
         if (trainer.isAccountFrozen) {
             res.status(501);
-            throw new Error('Accesss denied!');
+            throw new Error('Access denied!');
         } else {
             const { workoutName, workoutCategory, workoutDescription, workoutPicture, workoutVideoLink, workoutDuration, workoutSteps, equipmentRequired, equipmentList } = req.body;
             const trainerId = trainer.trainerId
@@ -379,7 +379,7 @@ const updateWorkout = asyncHandler( async(req, res) => {
     if (trainer) {
         if (trainer.isAccountFrozen) {
             res.status(501);
-            throw new Error('Accesss denied!');
+            throw new Error('Access denied!');
         } else {
             const { workoutName, workoutCategory, workoutDescription, workoutPicture, workoutVideoLink, workoutDuration, workoutSteps, equipmentRequired, equipmentList } = req.body;
 
@@ -431,7 +431,7 @@ const deleteWorkout = asyncHandler( async(req, res) => {
     if (trainer) {
         if (trainer.isAccountFrozen) {
             res.status(501);
-            throw new Error('Accesss denied!');
+            throw new Error('Access denied!');
         } else {
             const workout = await Workout.findById(req.params.id);
             const trainerId = trainer.trainerId;
@@ -481,7 +481,7 @@ const getClientProgress = asyncHandler( async(req, res) => {
     if (trainer) {
         if (trainer.isAccountFrozen) {
             res.status(501);
-            throw new Error('Accesss denied!');
+            throw new Error('Access denied!');
         } else {
             const progress = await Progress.findOne({clientId: clientId}).populate("progress.workout", "workoutName")
             
@@ -508,7 +508,7 @@ const assignWorkout = asyncHandler( async(req, res) => {
     if (trainer) {
         if (trainer.isAccountFrozen) {
             res.status(501);
-            throw new Error('Accesss denied!');
+            throw new Error('Access denied!');
         } else {
 
             const client = await Client.findOne({ clientId });
@@ -521,7 +521,7 @@ const assignWorkout = asyncHandler( async(req, res) => {
 
             if(!workoutFound) {
                 const progress = await Progress.findOneAndUpdate({clientId: clientId}, 
-                    { $push: {progress: { workout: workoutId}} }
+                    { $push: {progress: { workout: workoutId, assignedDate: new Date() }} }
                 ).populate("progress.workout", "workoutName")
                 const client = await Client.findOneAndUpdate({clientId: clientId}, 
                     { $push: { workoutsAssignedForMe: {workout: workoutId} }}
@@ -555,7 +555,7 @@ const removeAssignedWorkout = asyncHandler( async(req, res) => {
     if (trainer) {
         if (trainer.isAccountFrozen) {
             res.status(501);
-            throw new Error('Accesss denied!');
+            throw new Error('Access denied!');
         } else {
             const progress = await Progress.findOneAndUpdate({clientId: clientId}, 
                 { $pull: {progress: { workout: workoutId}} }
@@ -572,72 +572,42 @@ const removeAssignedWorkout = asyncHandler( async(req, res) => {
     }
 })
 
-// @desc    Return the clients requests
-// @route   GET /apiv1/trainer/client-request
-// @access  Private
-const getClientRequest = asyncHandler( async(req, res) => {
-    const { email } = req.body;
-    // Getting the trainer id
-    const trainer = await Trainer.findOne({email: email});
-
-    // checking if the account is not suspended
-    if (trainer) {
-        if (trainer.isAccountFrozen) {
-            res.status(501);
-            throw new Error('Accesss denied!');
-        } else {
-            const request = await Request.find({})
-            res.json(request)
-        }
-    } else {
-        res.status(404);
-        throw new Error('Trainer not found');
-    }
-})
-
 // @desc    Update a client request
 // @route   PUT /apiv1/trainer/client-request/:id
 // @access  Private
 const updateClientRequest = asyncHandler( async(req, res) => {
-    const { email } = req.body;
-    // Getting the trainer id
-    const trainer = await Trainer.findOne({email: email});
+   // Getting the trainer id
+    // production
+    const trainer = await Trainer.findOne({_id: req.trainer._id});
+    // development
+    // const { email } = req.body;
+    // const trainer = await Trainer.findOne({email: email});
+
+    const { clientId, approved } = req.body;
 
     // checking if the account is not suspended
     if (trainer) {
         if (trainer.isAccountFrozen) {
             res.status(501);
-            throw new Error('Accesss denied!');
+            throw new Error('Access denied!');
         } else {
-            // const request = await Request.find({})
-            // res.json(request)
-            res.json("Trainer - update request")
+            if (approved){
+                const request = await Request.findOneAndUpdate({client: clientId}, { Approved: true })
+                .then( async () =>{
+                    await Trainer.updateOne({ email: trainer.email}, { $push: { clients: {client: clientId} }})
+                    await Client.findOneAndUpdate({ _id: clientId}, { trainerId: trainer.trainerId })
+                })
+                res.json(request)
+            } else {
+                const request = await Request.findOneAndDelete({client: clientId})
+                await Trainer.updateOne({ email: trainer.email}, { $pull: { clients: {client: clientId} }})
+                res.json(request)
+            }
         }
     } else {
         res.status(404);
         throw new Error('Trainer not found');
     }
-})
-
-// @desc    Return chats for trainers
-// @route   GET /apiv1/trainer/chat
-// @access  Private
-const getChats = asyncHandler( async(req, res) => {
-    res.json("Trainer - get chats")
-})
-
-// @desc    Return specific chat
-// @route   GET /apiv1/trainer/chat/:id
-// @access  Private
-const getSpecificChat = asyncHandler( async(req, res) => {
-    res.json("Trainer - get specific chats")
-})
-
-// @desc    Add a text to a chat
-// @route   POST /apiv1/trainer/chat/:id
-// @access  Private
-const addChat = asyncHandler( async(req, res) => {
-    res.json("Trainer - add chat")
 })
 
 // @desc    Return trainers profile
@@ -658,17 +628,17 @@ const updateProfile = asyncHandler( async(req, res) => {
     const { email, phoneNo, firstName, fatherName, sex, DOB, description, picture } = req.body;
 
     if (trainer) {
-        trainer.email = email;
-        trainer.phoneNo = phoneNo;
-        trainer.firstName = firstName;
-        trainer.fatherName = fatherName;
-        trainer.sex = sex;
-        trainer.DOB = DOB;
-        trainer.description = description
-        trainer.picture = picture
+        trainer.email = email ? email : trainer.email;
+        trainer.phoneNo = phoneNo ? phoneNo : trainer.phoneNo;
+        trainer.firstName = firstName ? firstName : trainer.firstName;
+        trainer.fatherName = fatherName ? fatherName : trainer.fatherName;
+        trainer.sex = sex ? sex : trainer.sex;
+        trainer.DOB = DOB ? DOB : trainer.DOB;
+        trainer.description = description ? description : trainer.description
+        trainer.picture = picture ? picture : trainer.picture
         
         if (req.body.password) {
-            trainer.password = req.body.password;
+            trainer.password = req.body.password !== "" && req.body.password;
         }
 
         const updatedTrainer = await trainer.save();
@@ -690,8 +660,6 @@ const updateProfile = asyncHandler( async(req, res) => {
     }
 })
 
-
-
 module.exports = {
     dashboard,
     getClients,
@@ -706,11 +674,7 @@ module.exports = {
     getClientProgress,
     assignWorkout,
     removeAssignedWorkout,
-    getClientRequest,
     updateClientRequest,
-    getChats,
-    getSpecificChat,
-    addChat,
     getProfile,
     updateProfile
 }
