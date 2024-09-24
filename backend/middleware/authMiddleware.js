@@ -78,6 +78,16 @@ const protectClient = asyncHandler( async (req, res, next) => {
 
 } )
 
+// Trainer middleware
+const trainer = (req, res, next) => {
+    if (req.trainer && req.trainer.isTrainer) {
+        next();
+    } else {
+        res.status(401);
+        throw new Error ("Not authorized as trainer!");
+    }
+}
+
 // Client middleware
 const client = (req, res, next) => {
     if (req.client && req.client.isClient) {
@@ -88,15 +98,6 @@ const client = (req, res, next) => {
     }
 }
 
-// Trainer middleware
-const trainer = (req, res, next) => {
-    if (req.trainer && req.trainer.isTrainer) {
-        next();
-    } else {
-        res.status(401);
-        throw new Error ("Not authorized as trainer!");
-    }
-}
 // Admin middleware
 const admin = (req, res, next) => {
     if (req.admin && req.admin.isAdmin) {
