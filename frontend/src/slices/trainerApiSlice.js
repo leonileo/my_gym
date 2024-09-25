@@ -3,7 +3,7 @@ import { apiSlice } from "./apiSlice";
 
 export const trainerApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
-        dashboard: builder.query({
+        Tdashboard: builder.query({
             query: () => ({
                 url: `${TRAINER_URL}/dashboard`
             })
@@ -18,7 +18,7 @@ export const trainerApiSlice = apiSlice.injectEndpoints({
                 url: `${TRAINER_URL}/service-list`
             })
         }),
-        getWorkout: builder.query({
+        TgetWorkout: builder.query({
             query: () => ({
                 url: `${TRAINER_URL}/workout`
             })
@@ -91,7 +91,7 @@ export const trainerApiSlice = apiSlice.injectEndpoints({
         }),
         updateClientRequest: builder.mutation({
             query: (data) => ({
-                url: `${TRAINER_URL}/client-request/${data.requestId}`,
+                url: `${TRAINER_URL}/client-request`,
                 method: 'PUT',
                 body: data
             })
@@ -113,12 +113,12 @@ export const trainerApiSlice = apiSlice.injectEndpoints({
                 body: data
             })
         }),
-        getProfile: builder.query({
+        TgetProfile: builder.query({
             query: () => ({
                 url: `${TRAINER_URL}/profile`
             })
         }),
-        updateProfile: builder.mutation({
+        TupdateProfile: builder.mutation({
             query: (data) => ({
                 url: `${TRAINER_URL}/profile`,
                 method: 'PUT',
@@ -136,10 +136,10 @@ export const trainerApiSlice = apiSlice.injectEndpoints({
 })
 
 export const {
-    useDashboardQuery,
+    useTdashboardQuery,
     useGetClientsQuery,
     useGetServiceQuery,
-    useGetWorkoutQuery,
+    useTgetWorkoutQuery,
     useCreateServiceMutation,
     useUpdateServiceMutation,
     useDeleteServiceMutation,
@@ -154,7 +154,7 @@ export const {
     useGetChatsQuery,
     useGetSpecificChatQuery,
     useAddChatQuery,
-    useGetProfileQuery,
-    useUpdateProfileMutation,
+    useTgetProfileQuery,
+    useTupdateProfileMutation,
     useUploadTrainerImageMutation
 } = trainerApiSlice;
