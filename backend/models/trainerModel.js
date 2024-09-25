@@ -11,19 +11,19 @@ const trainerSchema = new mongoose.Schema({
     sex: {type: String},
     DOB: {type: Date},
     clients: [{
-        client: {type: mongoose.Schema.Types.ObjectId, required: true, ref: "Client"},
+        client: {type: mongoose.Schema.Types.ObjectId, required: true, unique: true, ref: "Client"},
     }],
     picture: {type: String},
     verifiedTrainer: {type: Boolean, default: false},
     description: {type: String},
     serviceList: [{
-        service: {type: mongoose.Schema.Types.ObjectId, required: true, ref: "Service"},
+        service: {type: mongoose.Schema.Types.ObjectId, required: true, unique: true, ref: "Service"},
     }],
     email: {type: String, unique: true},
     phoneNo: {type: Number, unique: true},
     password: {type: String},
     myWorkouts: [{
-        workout: {type: mongoose.Schema.Types.ObjectId, required: true, ref: "Workout"},
+        workout: {type: mongoose.Schema.Types.ObjectId, required: true, unique: true, ref: "Workout"},
     }],
     isAccountFrozen: {type: Boolean, default: false},
     isAdmin: {type: Boolean, default: false},
