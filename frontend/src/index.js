@@ -1,6 +1,7 @@
 // PROJECT POWERD BY LABA CREATIVES
 // index.css
 // Import necessary modules
+// eslint-disable-next-line
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
