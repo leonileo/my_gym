@@ -38,7 +38,7 @@ app.use('/apiv1/upload', uploadRoutes);
 //   );
 // } else {
   const __dirname = path.resolve();
-  app.use('/backend/uploads', express.static(path.join(__dirname, '/backend/uploads')));
+  app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
   app.get('/', (req, res) => {
     res.send('API is running....');
   });
