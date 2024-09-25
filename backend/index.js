@@ -20,6 +20,28 @@ connectDB()
 // initialize app
 const app = express()
 
+// cors
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  next();
+})
+
+app.use((req, res, next) => {
+res.setHeader("Access-Control-Allow-Origin", "https://my-gym.onrender.com/");
+res.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT");
+res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+next();
+})
+
+app.options("/", (req, res) => {
+res.setHeader("Access-Control-Allow-Origin", "https://my-gym.onrender.com/");
+res.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT");
+res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+res.sendStatus(204);
+});
+
 // main function
 app.use(cors());
 app.use(express.json());
@@ -31,29 +53,6 @@ app.use('/apiv1/admin', adminRoutes);
 app.use('/apiv1/trainer', trainerRoutes);
 app.use('/apiv1/client', clientRoutes);
 app.use('/apiv1/upload', uploadRoutes);
-
-// cors
-app.use((req, res, next) => {
-    res.setHeader("Access-Control-Allow-Origin", "*");
-    res.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT");
-    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-    next();
-})
-
-app.use((req, res, next) => {
-res.setHeader("Access-Control-Allow-Origin", "https://my-gym.onrender.com/");
-res.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT");
-res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-next();
-})
-
-app.options("/", (req, res) => {
-  res.setHeader("Access-Control-Allow-Origin", "https://my-gym.onrender.com/");
-  res.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-  res.sendStatus(204);
-});
-
 
 // if (process.env.NODE_ENV === 'production') {
 //   app.use(express.static(path.join(__dirname, '/frontend/build')));
