@@ -14,7 +14,7 @@ import MarkdownPreview from '@uiw/react-markdown-preview'
 import ReactQuill from 'react-quill';
 import "react-quill/dist/quill.snow.css";
 // redux functions
-import { useDeleteWorkoutMutation, useGetWorkoutQuery, useUpdateWorkoutMutation } from '../../slices/trainerApiSlice';
+import { useDeleteWorkoutMutation, useTgetWorkoutQuery, useUpdateWorkoutMutation } from '../../slices/trainerApiSlice';
 import { toast } from 'react-toastify';
 // dev
 // import gymImg from '../../assets/images/gymImg.jpg'
@@ -191,7 +191,7 @@ const TrainerWorkout = () => {
   // ]
   // dummy data
 
-  const { data: workout, isLoading, error, refetch } = useGetWorkoutQuery();
+  const { data: workout, isLoading, error, refetch } = useTgetWorkoutQuery();
   const [updateWorkout, {isLoading: updateLoader}] = useUpdateWorkoutMutation();
   const [deleteWorkout, {isLoading: deleteLoader}] = useDeleteWorkoutMutation();
   const workouts = isLoading ? [] : error ? [] : workout.myWorkouts;
