@@ -1,4 +1,3 @@
-// PROJECT POWERD BY LABA CREATIVES
 // index.css
 // Import necessary modules
 // eslint-disable-next-line
@@ -81,6 +80,3 @@ root.render(
     </Provider>
   </React.StrictMode>
 );
-
-
-// PROJECT POWERD BY LABA CREATIVES
