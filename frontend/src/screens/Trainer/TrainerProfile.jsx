@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSignoutMutation } from '../../slices/authApiSlice';
 import { logout } from '../../slices/authSlice';
 import { toast } from 'react-toastify';
-import { useGetProfileQuery, useUpdateProfileMutation, useUploadTrainerImageMutation } from '../../slices/trainerApiSlice';
+import { useTgetProfileQuery, useTupdateProfileMutation, useUploadTrainerImageMutation } from '../../slices/trainerApiSlice';
 import { setCredentials } from '../../slices/authSlice';
 import { IoRefresh } from 'react-icons/io5';
 import { TbFileSad } from 'react-icons/tb';
@@ -31,14 +31,13 @@ const TrainerProfile = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
-  const {data: profile, isLoading, error} = useGetProfileQuery();
+  const {data: profile, isLoading, error, refetch} = useTgetProfileQuery();
   const [signout, {isLoading: signoutLoad}] = useSignoutMutation();
-  const [updateProfile, {isLoading: updateProfileLoad, error: errorUpdate}] = useUpdateProfileMutation();
+  const [updateProfile, {isLoading: updateProfileLoad, error: errorUpdate}] = useTupdateProfileMutation();
+  const [uploadTrainerImage] = useUploadTrainerImageMutation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  
-  // user infotmation  
-  const [uploadTrainerImage] = useUploadTrainerImageMutation();
+   
 
   const uploadFileHandler = async (e) =>{
     const formData = new FormData();
@@ -72,6 +71,7 @@ const TrainerProfile = () => {
             }).unwrap();
             
             dispatch(setCredentials(res));
+            refetch()
             toast.success('Profile updated successfully.')
             setModal(1)
         } catch (error) {
