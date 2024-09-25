@@ -12,7 +12,8 @@ const progressSchema = new mongoose.Schema({
         weightInPicture: {type: String, default: ''},
         weightInNumber: {type: String},
         isWorkoutDone: {type: Boolean, default: false},
-        progressDate: {type: Date, default: Date.now(), unique: true},
+        progressDate: {type: Date, default: Date.now()},
+        assignedDate: {type: Date},
         notes: {type: String, default: ''}
     }]
 }, {timestamps: true});
