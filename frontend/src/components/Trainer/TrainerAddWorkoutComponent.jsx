@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 // quill
 import ReactQuill from 'react-quill';
 import "react-quill/dist/quill.snow.css";
-import { useCreateWorkoutMutation, useGetWorkoutQuery, useUploadTrainerImageMutation } from '../../slices/trainerApiSlice';
+import { useCreateWorkoutMutation, useTgetWorkoutQuery, useUploadTrainerImageMutation } from '../../slices/trainerApiSlice';
 import { toast } from 'react-toastify';
 import { RxCrossCircled } from 'react-icons/rx';
 import { Spinner } from 'flowbite-react';
@@ -43,7 +43,7 @@ const TrainerAddWorkoutComponent = ({setModal}) => {
         setEquipmentList(updatedItems);
       };
 
-    const { refetch } = useGetWorkoutQuery();
+    const { refetch } = useTgetWorkoutQuery();
     const [createWorkout, { isLoading: workoutLoading}] = useCreateWorkoutMutation();
     const [uploadTrainerImage] = useUploadTrainerImageMutation();
 
