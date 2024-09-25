@@ -3,17 +3,17 @@ import { apiSlice } from "./apiSlice";
 
 export const adminApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
-        dashboard: builder.query({
+        Adashboard: builder.query({
             query: () => ({
-                url: `${ADMIN_URL}/`
+                url: `${ADMIN_URL}/dashboard`
             })
         }),
-        getClients: builder.query({
+        getAllClients: builder.query({
             query: () => ({
                 url: `${ADMIN_URL}/clients`
             })
         }),
-        getTrainers: builder.query({
+        getAllTrainers: builder.query({
             query: () => ({
                 url: `${ADMIN_URL}/trainers`
             })
@@ -35,15 +35,50 @@ export const adminApiSlice = apiSlice.injectEndpoints({
                 body: data
             })
         }),
-        getProfile: builder.query({
+        AgetProfile: builder.query({
             query: () => ({
                 url: `${ADMIN_URL}/profile`
             })
         }),
-        updateProfile: builder.query({
+        AupdateProfile: builder.mutation({
             query: (data) => ({
                 url: `${ADMIN_URL}/profile/`,
                 method: 'PUT',
+                body: data
+            })
+        }),
+        suspendClientAccount: builder.mutation({
+            query: (data) => ({
+                url: `${ADMIN_URL}/suspend-client-account`,
+                method: 'PUT',
+                body: data
+            })
+        }),
+        suspendTrainerAccount: builder.mutation({
+            query: (data) => ({
+                url: `${ADMIN_URL}/suspend-trainer-account`,
+                method: 'PUT',
+                body: data
+            })
+        }),
+        activateClientAccount: builder.mutation({
+            query: (data) => ({
+                url: `${ADMIN_URL}/activate-client-account`,
+                method: 'PUT',
+                body: data
+            })
+        }),
+        activateTrainerAccount: builder.mutation({
+            query: (data) => ({
+                url: `${ADMIN_URL}/activate-trainer-account`,
+                method: 'PUT',
+                body: data
+            })
+        }),
+        uploadAdminImage: builder.mutation({
+            query: (data) => ({
+                url: `/apiv1/upload`,
+                method: 'POST',
                 body: data
             })
         })
@@ -51,12 +86,17 @@ export const adminApiSlice = apiSlice.injectEndpoints({
 })
 
 export const {
-    useDashboardQuery,
-    useGetClientsQuery,
-    useGetTrainersQuery,
+    useAdashboardQuery,
+    useGetAllClientsQuery,
+    useGetAllTrainersQuery,
     useGetChatQuery,
     useGetSpecificChatQuery,
     useAddChatMutation,
-    useGetProfileQuery,
-    useUpdateProfileQuery
+    useAgetProfileQuery,
+    useAupdateProfileMutation,
+    useSuspendClientAccountMutation,
+    useSuspendTrainerAccountMutation,
+    useActivateClientAccountMutation,
+    useActivateTrainerAccountMutation,
+    useUploadAdminImageMutation
 } = adminApiSlice;
