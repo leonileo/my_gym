@@ -4,9 +4,9 @@
 const mongoose = require('mongoose');
 
 const requestSchema = new mongoose.Schema({
-    clientId: {type: String, required: true},
+    client: {type: mongoose.Schema.Types.ObjectId, required: true, unique:true , ref: "Client"},
     Approved: {type: Boolean, required: true},
-    date: {type: Date, required: true},
+    date: {type: Date, required: true, default: new Date()},
     trainerId: {type: String, required: true},
     note: {type: String},
 }, {timestamps: true});
