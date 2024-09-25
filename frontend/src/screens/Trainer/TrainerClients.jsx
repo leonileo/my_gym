@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import TrainerSideNavComponent from '../../components/Trainer/TrainerSideNavComponent'
 import gymImg from '../../assets/images/gymImg.jpg'
 import TrainerClientsComponent from '../../components/Trainer/TrainerClientsComponent';
-import { useGetClientsQuery, useGetClientProgressMutation, useGetWorkoutQuery, useAssignWorkoutMutation, useRemoveAssignedWorkoutMutation, useGetProfileQuery } from '../../slices/trainerApiSlice';
+import { useGetClientsQuery, useGetClientProgressMutation, useTgetWorkoutQuery, useAssignWorkoutMutation, useRemoveAssignedWorkoutMutation, useTgetProfileQuery } from '../../slices/trainerApiSlice';
 import { Spinner, Timeline } from 'flowbite-react';
 import { MdPending } from 'react-icons/md';
 import { TbFileSad } from 'react-icons/tb';
@@ -14,7 +14,7 @@ import { IoRefresh } from 'react-icons/io5';
 
 const GetProgress = ({clientId}) => {
   const [getClientProgress, {isLoading, error}, ] = useGetClientProgressMutation();
-  const {refetch} = useGetProfileQuery();
+  const {refetch} = useTgetProfileQuery();
   const [progress, setProgress] = useState();
   const [active, setActive] = useState(false);
   const [workoutId, setWorkoutId] = useState();
@@ -61,7 +61,7 @@ const GetProgress = ({clientId}) => {
       <Timeline>
       {active && progress.progress.map(progress => (
         <> 
-        <div className='overflow-hidden w-[550px]'>
+        <div className='overflow-hidden w-[550px] z-40 '>
             <Timeline.Item className='bg-gray-100 rounded'>
               <Timeline.Point icon={progress.isWorkoutDone ? FaCheck : FaXmark} />
               <Timeline.Content>
@@ -93,7 +93,7 @@ const GetProgress = ({clientId}) => {
 const GetWorkout = ({clientId, clientName}) => {
   const [workoutId, setWorkoutId] = useState('');
 
-  const {data:workout, isLoading} = useGetWorkoutQuery();
+  const {data:workout, isLoading} = useTgetWorkoutQuery();
   const [assignWorkout, {isLoading: assignLoad}] = useAssignWorkoutMutation();
 
   const handleAssign = async (e) => {
@@ -147,12 +147,12 @@ const TrainerClients = () => {
   const [DOB, setDOB] = useState('')
   const [picture, setPicture] = useState('')
   const [progressId, setProgressId] = useState('')
-  const [weightBeforeTraining, setWeightBeforeTraining] = useState('')
-  const [currentWeight, setCurrentWeight] = useState('')
-  const [plannedWeight, setPlannedWeight] = useState('')
+  const [setWeightBeforeTraining] = useState('')
+  const [setCurrentWeight] = useState('')
+  const [setPlannedWeight] = useState('')
   const [email, setEmail] = useState('')
   const [phoneNo, setPhoneNo] = useState('')
-  const [workoutsAssignedForMe, setWorkoutsAssignedForMe] = useState('')
+  const [setWorkoutsAssignedForMe] = useState('')
   const [isAccountFrozen, setIsAccountFrozen] = useState('')
 
   const setClient = (clientId, firstName, fatherName, sex, DOB, picture, progressId, weightBeforeTraining, currentWeight, plannedWeight, email, phoneNo, workoutsAssignedForMe, isAccountFrozen )=> {
@@ -373,15 +373,15 @@ const TrainerClients = () => {
                 : 
                 <div className='my-10 md:px-10 px-2'>
                   <div className='trainer p-1 h-full bg-white overflow-auto'>
-                    <div className="top w-full h-[10vh] relative pl-8 md:mb-28 mb-16 rounded-t"
+                    <div className="top w-full h-[10vh] relative z-50 pl-8 md:mb-28 mb-16 rounded-t"
                       style={{
-                        backgroundImage: `linear-gradient(90deg, rgba(255, 255, 255, .1), rgba(6, 148, 162, 1)), url(${gymImg})`,
+                        backgroundImage: `linear-gradient(90deg, rgba(255, 255, 255, .1), rgba(6, 148, 162, 1)), url(${picture ? picture: gymImg})`,
                         backgroundRepeat: "no-repeat",
                         backgroundSize: "cover",
                         backgroundPosition: "center",
                       }}
                     >
-                      <div onClick={() => {setModal(1); setCurrId('')}} className="closeBtn flex gap-3 justify-end px-5 w-full">
+                      <div onClick={() => {setModal(1); setCurrId('')}} className="z-50 closeBtn flex gap-3 justify-end px-5 w-full">
                         <div className="text-red-500 bg-white p-2 my-5 rounded hover:bg-red-500 transition-all hover:text-white cursor-pointer">
                           <FaXmark/>
                         </div>
@@ -389,7 +389,7 @@ const TrainerClients = () => {
                       <div className="absolute md:top-[50%] top-[60%] flex gap-4 items-end">
                         <div
                         style={{
-                          backgroundImage: `url(${gymImg})`,
+                          backgroundImage: `url(${picture ? picture: gymImg})`,
                           backgroundRepeat: "no-repeat",
                           backgroundSize: "cover",
                           backgroundPosition: "center",
@@ -409,8 +409,8 @@ const TrainerClients = () => {
                       </div>
                     </div>
 
-                    <div className="bottom pl-8 my-2">
-                      <div className="opt h-full sticky py-3 pr-4 -top-2 bg-white w-full">
+                    <div className="bottom pl-8 my-2 z-50">
+                      <div className="opt h-full sticky py-3 pr-4 -top-2 bg-white w-full z-50">
                         <div className='border-b flex gap-4 w-full overflow-auto text-nowrap scrollNone'>
                           <button onClick={() => setActive(1)} className={`border-b-[2px] transition-all ${active === 1 ? " border-teal-500": "border-transparent"} `}>Account</button>
                           <button onClick={() => setActive(2)} className={`border-b-[2px] transition-all ${active === 2 ? " border-teal-500": "border-transparent"} `}>Fitness</button>
@@ -446,7 +446,7 @@ const TrainerClients = () => {
                         </div>
                       </div>
                       ) : active === 2 ? (
-                        <div className='transition-all py-3'>
+                        <div className='transition-all py-3 z-40'>
                           <h3 className='md:text-xl text-gray-700 capitalize'>Progress information</h3>
                           <GetProgress clientId={clientId} />
                         </div>
