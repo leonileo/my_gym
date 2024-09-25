@@ -5,7 +5,7 @@ export const clientApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         dashboard: builder.query({
             query: () => ({
-                url: CLIENT_URL
+                url: `${CLIENT_URL}/dashboard`
             })
         }),
         getWorkout: builder.query({
@@ -13,9 +13,16 @@ export const clientApiSlice = apiSlice.injectEndpoints({
                 url: `${CLIENT_URL}/workout`
             })
         }),
+        getProgress: builder.mutation({
+            query: (data) => ({
+                url: `${CLIENT_URL}/progress`,
+                method: 'POST',
+                body: data
+            })
+        }),
         updateWorkout: builder.mutation({
             query: (data) => ({
-                url: `${CLIENT_URL}/workout/${data.workoutId}`,
+                url: `${CLIENT_URL}/workout/`,
                 method: 'PUT',
                 body: data
             })
@@ -42,7 +49,7 @@ export const clientApiSlice = apiSlice.injectEndpoints({
                 url: `${CLIENT_URL}/profile`
             })
         }),
-        updateProfile: builder.query({
+        updateProfile: builder.mutation({
             query: (data) => ({
                 url: `${CLIENT_URL}/profile`,
                 method: 'PUT',
@@ -51,8 +58,43 @@ export const clientApiSlice = apiSlice.injectEndpoints({
         }),
         addTrainer: builder.mutation({
             query: (data) => ({
-                url: `${CLIENT_URL}/addTrainer`,
+                url: `${CLIENT_URL}/add-trainer`,
                 method: 'POST',
+                body: data
+            })
+        }),
+        removeTrainer: builder.mutation({
+            query: (data) => ({
+                url: `${CLIENT_URL}/remove-trainer`,
+                method: 'PUT',
+                body: data
+            })
+        }),
+        uploadClientImage: builder.mutation({
+            query: (data) => ({
+                url: `/apiv1/upload`,
+                method: 'POST',
+                body: data
+            })
+        }),
+        uploadWeightPicture: builder.mutation({
+            query: (data) => ({
+                url: `/apiv1/upload/weight-picture`,
+                method: 'POST',
+                body: data
+            })
+        }),
+        uploadClientPicture: builder.mutation({
+            query: (data) => ({
+                url: `/apiv1/upload/client-picture`,
+                method: 'POST',
+                body: data
+            })
+        }),
+        updateWeightInfo: builder.mutation({
+            query: (data) => ({
+                url: `${CLIENT_URL}/update-weight-info`,
+                method: 'PUT',
                 body: data
             })
         })
@@ -61,12 +103,18 @@ export const clientApiSlice = apiSlice.injectEndpoints({
 
 export const {
     useDashboardQuery,
+    useGetProgressMutation,
     useGetWorkoutQuery,
     useUpdateWorkoutMutation,
     useGetChatsQuery,
     useGetSpecificChatQuery,
     useAddChatQuery,
     useGetProfileQuery,
-    useUpdateProfileQuery,
-    useAddTrainerMutation
+    useUpdateProfileMutation,
+    useAddTrainerMutation,
+    useRemoveTrainerMutation,
+    useUploadClientImageMutation,
+    useUploadClientPictureMutation,
+    useUploadWeightPictureMutation,
+    useUpdateWeightInfoMutation
 } = clientApiSlice;
