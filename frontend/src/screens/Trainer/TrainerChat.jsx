@@ -1,7 +1,5 @@
 import React, { useState } from 'react'
 import TrainerSideNavComponent from '../../components/Trainer/TrainerSideNavComponent'
-import { FaSearch } from 'react-icons/fa';
-import { FaArrowLeft } from 'react-icons/fa6';
 import TrainerChatComponent from '../../components/Trainer/TrainerChatComponent'
 
 const TrainerChat = () => {
