@@ -23,13 +23,14 @@
     "react-router-dom": "^6.26.1",
     "react-scripts": "^5.0.1",
     "react-toastify": "^10.0.5",
+    "serve": "^14.2.3",
     "swiper": "^11.1.12",
     "timeago.js": "^4.0.2",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "npm install && react-scripts build && npm install -g serve && serve -s build",
+    "build": "npm install && react-scripts build && serve -s build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
