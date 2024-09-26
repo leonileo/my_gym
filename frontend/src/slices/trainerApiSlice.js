@@ -50,7 +50,7 @@ export const trainerApiSlice = apiSlice.injectEndpoints({
                 body: data
             })
         }),
-        updateWorkout: builder.mutation({
+        tupdateWorkout: builder.mutation({
             query: (data) => ({
                 url: `${TRAINER_URL}/workout/${data.workoutId}`,
                 method: 'PUT',
@@ -144,7 +144,7 @@ export const {
     useUpdateServiceMutation,
     useDeleteServiceMutation,
     useCreateWorkoutMutation,
-    useUpdateWorkoutMutation,
+    useTupdateWorkoutMutation,
     useDeleteWorkoutMutation,
     useGetClientRequestQuery,
     useGetClientProgressMutation,
