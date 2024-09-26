@@ -14,7 +14,7 @@ import MarkdownPreview from '@uiw/react-markdown-preview'
 import ReactQuill from 'react-quill';
 import "react-quill/dist/quill.snow.css";
 // redux functions
-import { useDeleteWorkoutMutation, useTgetWorkoutQuery, useUpdateWorkoutMutation } from '../../slices/trainerApiSlice';
+import { useDeleteWorkoutMutation, useTgetWorkoutQuery, useTupdateWorkoutMutation, useUploadTrainerImageMutation } from '../../slices/trainerApiSlice';
 import { toast } from 'react-toastify';
 // dev
 // import gymImg from '../../assets/images/gymImg.jpg'
@@ -192,10 +192,22 @@ const TrainerWorkout = () => {
   // dummy data
 
   const { data: workout, isLoading, error, refetch } = useTgetWorkoutQuery();
-  const [updateWorkout, {isLoading: updateLoader}] = useUpdateWorkoutMutation();
+  const [updateWorkout, {isLoading: updateLoader}] = useTupdateWorkoutMutation();
   const [deleteWorkout, {isLoading: deleteLoader}] = useDeleteWorkoutMutation();
   const workouts = isLoading ? [] : error ? [] : workout.myWorkouts;
+  const [uploadTrainerImage] = useUploadTrainerImageMutation();
 
+  const uploadFileHandler = async (e) =>{
+      const formData = new FormData();
+      formData.append('picture', e.target.files[0]);
+      try {
+          const res = await uploadTrainerImage(formData).unwrap();
+          toast.success(res.message);
+          setWorkoutPicture(res.picture);
+      } catch (error) {
+          toast.error(error?.data?.message || error?.error)
+      }
+  }
 
   const stepHandler = (workoutId, workoutName, workoutCategory, workoutDescription, workoutPicture, workoutVideoLink, workoutDuration, workoutSteps, equipmentRequired, equipmentList) => {
     setWorkoutId(workoutId)
@@ -461,8 +473,20 @@ const TrainerWorkout = () => {
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                   }}
-                  className="btop h-[20vh] relative shadow-2xl mb-5"
+                  className="btop min-h-[20vh] relative shadow-2xl mb-5"
                   >
+                  <div className='my-2 xl:p-5 p-2 h-full bg-[rgba(255,255,255,0.2)]'
+                  style={{
+                      backdropFilter: 'blur(10px)'
+                  }}
+                  >
+                    <div className='flex justify-center items-center w-full h-[20vh]'>
+                        <img src={workoutPicture} alt="workout" className='h-[80%] rounded' />
+                    </div>
+                    <label htmlFor='add-workout-picture' className='bg-white xl:p-5 p-2 rounded'>Change workout picture</label>
+                    <input onChange={(e) => {uploadFileHandler(e)}} className='absolute -z-10 opacity-0' type="file" name="add-workout-picture" id="add-workout-picture" />
+                  </div>
+
                     <div className="txts absolute bottom-5 right-2 flex flex-wrap mx-2 md:m-0 gap-2">
                       <span className='bg-transparent border border-white p-2 px-5 text-white rounded flex gap-3 items-center'><MdTimer/>{workoutDuration}</span>
                       <span className='bg-transparent border border-white p-2 px-5 text-white rounded flex gap-3 items-center'><FaDumbbell/>{workoutCategory}</span>
@@ -487,7 +511,7 @@ const TrainerWorkout = () => {
                       </div>
                       <div className="text-gray-500 w-full block font-semibold add-equipment-opt">
                         <label className='block' htmlFor="add-equipment-opt">Add equipment option</label>
-                        <select required value={equipmentRequired} onChange={(e) => setEquipmentOpt(e.target.value)} className='border rounded w-full border-gray-400' name="add-equipment-opt" id="add-equipment-opt" >
+                        <select required value={equipmentOpt} onChange={(e) => setEquipmentOpt(e.target.value)} className='border rounded w-full border-gray-400' name="add-equipment-opt" id="add-equipment-opt" >
                             <option>Select equipment option</option>
                             <option value={true}>Yes</option>
                             <option value={false}>No</option>
@@ -497,9 +521,9 @@ const TrainerWorkout = () => {
                         <div className="box my-4">
                           <h3 className='text-gray-700 capitalize font-semibold'>Equipmelt list</h3>
                           <ul className='px-8 my-2'>
-                            <div className="flex gap-4">
+                            <div className="flex items-center gap-4">
                               <input placeholder='Enter equipment here' onChange={(e) => setEquipment(e.target.value)} value={equipment} type="text" className='bg-gray-50 border p-2 border-gray-200 my-2 rounded'/>
-                              <button onClick={() => {setEquipmentList([...equipmentList, equipment]); setEquipment('')}}>Add</button>
+                              <p className='cursor-pointer' onClick={() => {setEquipmentList([...equipmentList, equipment]); setEquipment('')}}>Add</p>
                             </div>
                             {/* for prod */}
                             {equipmentList.map((equipment) => (
@@ -507,9 +531,9 @@ const TrainerWorkout = () => {
                                 <div className=' flex items-center gap-5'>
                                   {equipment}
                                   <div className=' rounded-full w-5 h-5 flex items-center justify-center'>
-                                    <button type='button'
-                                     onClick={() => removeItem(equipment.id)}
-                                    className='hover:text-red-500 transition-all'><RxCrossCircled/></button>
+                                    <p
+                                     onClick={(e) => removeItem(e, equipment.id)}
+                                    className='hover:text-red-500 transition-all'><RxCrossCircled/></p>
                                   </div>
                                 </div>
                               </li>
