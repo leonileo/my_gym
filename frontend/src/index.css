@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+*{
+    scroll-behavior: smooth !important;
+}
 /* react calendar */
 .rdp-chevron {
     fill: #0694A2 !important;
@@ -16,6 +19,9 @@
 /* swiper */
 .swiper-pagination-bullet {
     background-color: #0694A2 !important;
+}
+.mySwiper1 .swiper-pagination-bullet {
+    background-color: white !important;
 }
 .swiper-pagination-bullet-active-main{
     background-color: white !important;
