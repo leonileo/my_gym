@@ -353,7 +353,7 @@ const AdminDashboard = () => {
                             className='p-4 img rounded w-full mb-3 xl:h-[26vh] h-[35vh] relative'>
                             <div className="trainer-box absolute top-0 right-0 xl:w-[40%] w-full xl:min-h-[50%] h-[70%] bg-gradient-to-r from-[rgba(255,255,255,0.2)] to-white flex justify-end py-5 p-2 rounded-l-full">
                               <div className='space-y-2 text-center text-gray-700'>
-                                <p className='font-semibold'>Workout created <span className='text-gray-700'> {format(created.createdAt.substring(0,10))} </span></p>
+                                <p className='font-semibold'>Workout created <span className='text-gray-700'> {format(created.createdAt)} </span></p>
                                 <div className="flex justify-center">
                                   <div className='trainer-img flex justify-center items-center w-[70px] h-[70px] rounded-full'
                                   style={{
