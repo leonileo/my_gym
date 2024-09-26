@@ -4,9 +4,7 @@ import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux';
 
 const HeaderComponent = () => {
-
   const userInfo = useSelector((state) => state.auth).userInfo
-  console.log(userInfo)
 
   return (
     <>
@@ -43,8 +41,8 @@ const HeaderComponent = () => {
           Home
         </Navbar.Link>
         <Navbar.Link href="/#trainers">Trainers</Navbar.Link>
-        <Navbar.Link href="/#">Features</Navbar.Link>
-        <Navbar.Link href="/#">Status</Navbar.Link>
+        <Navbar.Link href="/#features">Features</Navbar.Link>
+        <Navbar.Link href="/#status">Status</Navbar.Link>
       </Navbar.Collapse>
     </Navbar>
     </>
