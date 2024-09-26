@@ -98,6 +98,7 @@ const updateProfile = asyncHandler( async(req, res) => {
         res.status(200).json({
             _id: updatedAdmin._id,
             email: admin.email,
+            picture: admin.picture,
             phoneNo: admin.phoneNo,
             firstName: admin.firstName,
             fatherName: admin.fatherName,
