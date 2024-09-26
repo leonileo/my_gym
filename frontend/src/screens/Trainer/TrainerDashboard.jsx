@@ -19,9 +19,13 @@ import { BsClipboard2Data } from "react-icons/bs";
 import { MdOutlineFormatListNumbered } from 'react-icons/md';
 import { useTdashboardQuery, useUpdateClientRequestMutation } from '../../slices/trainerApiSlice';
 import { Spinner } from 'flowbite-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import TrainerRequestComponent from '../../components/Trainer/TrainerRequestComponent';
 import { toast } from 'react-toastify';
+import { useSignoutMutation } from '../../slices/authApiSlice';
+import { useDispatch } from 'react-redux';
+import { logout } from '../../slices/authSlice';
+import { IoWarning } from 'react-icons/io5';
 
 const TrainerDashboard = () => {
   const [clpsd, setClpsd] = useState(false);
@@ -182,6 +186,11 @@ const TrainerDashboard = () => {
   // production environment
   const { data: stat, isLoading, error, refetch } = useTdashboardQuery();
   const [updateClientRequest, {isLoading: requestLoading}] = useUpdateClientRequestMutation();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  
+  const [signout, {isLoading: signoutLoad}] = useSignoutMutation();
+
   const progress = isLoading ? [] : error ? []: stat.progresses;
   const clients = isLoading ? [] : error ? []: stat.clients.clients;
   const requests = isLoading ? [] : error ? []: stat.request.requests;
@@ -225,7 +234,32 @@ const TrainerDashboard = () => {
     },
   ];
 
+  const logoutHandler = async () => {
+    if (window.confirm('Are you sure you want to logout ?')) {
+      try {
+          await signout().unwrap();
+          dispatch(logout());
+          toast.success("Logout successfull!")
+          setTimeout(() => {
+            navigate('/signin')          
+          }, 1500);
+      } catch (error) {
+          toast.error(error?.data?.message || error.error);
+      }
+    }
+  }
   return (
+    <>
+    {
+    isLoading ? "" : error && error.data.message === "Access denied!" 
+    && <div className='w-full absolute z-50 top-0 left-0 bg-white min-h-[100vh] text-2xl text-center flex items-center justify-center'>
+        <div>
+          <div className="flex text-3xl justify-center"><IoWarning /></div>
+          <p>{error.data.message}</p>
+          <button onClick={logoutHandler} className='text-lg'>Try contacting admins or try with another account</button>
+        </div>
+      </div>
+    }
     <div className='w-full min-h-[100vh] h-full flex items-start bg-gray-100 '>
       {/* left side */}
       <div  className={`left bg-white z-50 top-0 h-full transition-all ${clpsd ? "w-[100px]": "md:w-[250px]"}`}>
@@ -601,6 +635,7 @@ const TrainerDashboard = () => {
         </div>
       </div>
     </div>
+    </>
   )
 }
 
