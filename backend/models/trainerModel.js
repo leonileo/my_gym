@@ -23,7 +23,7 @@ const trainerSchema = new mongoose.Schema({
     phoneNo: {type: Number, unique: true},
     password: {type: String},
     myWorkouts: [{
-        workout: {type: mongoose.Schema.Types.ObjectId, required: true, unique: true, ref: "Workout"},
+        workout: {type: mongoose.Schema.Types.ObjectId, required: true, ref: "Workout"},
     }],
     isAccountFrozen: {type: Boolean, default: false},
     isAdmin: {type: Boolean, default: false},
