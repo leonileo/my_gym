@@ -1,7 +1,8 @@
 import React from 'react'
 import { Footer } from "flowbite-react";
-import { FaFacebook, FaInstagram } from "react-icons/fa6";
-import { FaYoutube } from "react-icons/fa";
+import { FaInstagram } from "react-icons/fa6";
+import { FaLinkedin, FaTwitter } from "react-icons/fa";
+import { Link } from 'react-router-dom';
 
 const FooterComponent = () => {
   return (
@@ -17,9 +18,9 @@ const FooterComponent = () => {
             <Footer.Link href="#">Contact</Footer.Link>
           </Footer.LinkGroup>
           <div className="socials flex items-center gap-3 text-teal-800">
-            <FaInstagram />
-            <FaYoutube />
-            <FaFacebook />
+            <Link target='_blank' to={'https://www.instagram.com/kalebleo4/'}><FaInstagram className='hover:text-pink-500 transition-all'/></Link>
+            <Link target='_blank' to={'https://www.linkedin.com/in/kaleb-wendwessen/'}><FaLinkedin className='hover:text-teal-400 transition-all'/></Link>
+            <Link target='_blank' to={'https://x.com/kalebleonileo'}><FaTwitter className='hover:text-blue-500 transition-all'/></Link>
           </div>
         </div>
         <Footer.Divider />
