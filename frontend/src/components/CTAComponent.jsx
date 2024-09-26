@@ -82,7 +82,7 @@ const CTAComponent = ({ isLoading, data, error }) => {
   const status = [
   {
     title: isLoading ? "" : error ? error : data.client,
-    description: `Over ${isLoading ? "" : error ? error : data.client} + active users.`
+    description: `Over ${isLoading ? "" : error ? error : data.client}+ active users.`
   },
   {
     title: isLoading ? "" : error ? error : data.trainer,
@@ -94,7 +94,7 @@ const CTAComponent = ({ isLoading, data, error }) => {
   },
   {
     title: isLoading ? "" : error ? error : data.service,
-    description: `Serviceses tailored to your needs.`
+    description: `Services tailored to your needs.`
   },
   ]
 
@@ -112,27 +112,27 @@ const CTAComponent = ({ isLoading, data, error }) => {
             <div className="top my-5 mt-20 p-5">
               <h3 className='font-semibold md:text-3xl'>Contact us</h3>
               <p className='xl:text-xl'>For any inquiries contact us</p>
-              <form onSubmit={sendEmail} className='my-5'>
+              <form onSubmit={sendEmail} className='my-5 text-black'>
                 <motion.input 
                   variants={FadeUp(0.4)}
                   initial="initial"
                   whileInView={"animate"}
-                  type="text" onChange={(e) => setName(e.target.value)} name="text" id="text" placeholder='Type your name' className='bg-white border-0 rounded p-2 px-3 w-[250px] block my-2' />
+                  type="text" onChange={(e) => setName(e.target.value)} name="text" id="text" placeholder='Type your name' className='bg-white border-0 rounded p-2 px-3 md:w-[250px] w-full block my-2' />
                 <motion.input 
                   variants={FadeUp(0.4)}
                   initial="initial"
                   whileInView={"animate"}
-                  type="email" required onChange={(e) => setEmail(e.target.value)} name="email" id="email" placeholder='Your email' className='bg-white border-0 rounded p-2 px-3 w-[250px] block my-2' />
+                  type="email" required onChange={(e) => setEmail(e.target.value)} name="email" id="email" placeholder='Your email' className='bg-white border-0 rounded p-2 px-3 md:w-[250px] w-full block my-2' />
                 <motion.textarea 
                   variants={FadeUp(0.2)}
                   initial="initial"
                   whileInView={"animate"}
-                  name="message" required onChange={(e) => setMessage(e.target.value)} id="" className='bg-white resize-none block my-2 w-[50%] rounded text-black' placeholder='Type your message here'></motion.textarea>
+                  name="message" required onChange={(e) => setMessage(e.target.value)} id="" className='bg-white resize-none block my-2 md:w-[50%] w-full rounded text-black' placeholder='Type your message here'></motion.textarea>
                 <motion.button 
                   variants={SlideRight(0.5)}
                   initial="initial"
                   whileInView={"animate"}
-                  className='p-2 px-3 rounded bg-teal-500 text-white hover:bg-white hover:text-teal-500 transition-all font-semibold'>
+                  className='p-2 px-3 rounded w-full mt-5 bg-teal-500 text-white hover:bg-white hover:text-teal-500 transition-all font-semibold'>
                     {
                     loading ? (
                       <div className="flex gap-2 items-center">
@@ -148,7 +148,7 @@ const CTAComponent = ({ isLoading, data, error }) => {
             <div className="bottom flex justify-center items-end text-center py-5">
               <div>
                 <p className='sm:text-2xl my-2'>our socials</p>
-                <div className="socials flex gap-5 items-center sm:text-3xl">
+                <div className="socials flex gap-5 items-center sm:text-3xl sm:h-auto h-[10vh]">
                   <motion.p
                      variants={FadeUp(0.2)}
                     initial="initial"
@@ -169,7 +169,7 @@ const CTAComponent = ({ isLoading, data, error }) => {
             </div>    
         </div>
 
-        <div className='w-[50%] flex justify-center items-center'>
+        <div className='md:w-[50%] flex justify-center items-center md:my-0 my-5'>
           <div className='h-[80%]'>
             <div className="status grid grid-cols-2 grid-rows-2 justify-center gap-3 w-full h-full">
               {status.map((stat) => 
@@ -179,7 +179,7 @@ const CTAComponent = ({ isLoading, data, error }) => {
                 whileInView={"animate"}
                 className='w-full bg-teal-500 text-white rounded-md p-2 flex items-center justify-center'>
                   <div>
-                    <p className='xl:text-2xl text-center flex items-center justify-center gap-2'>{isLoading ? <Spinner /> : <CountUp start={0} end={stat.title}/>} +</p>
+                    <p className='xl:text-2xl text-xl font-semibold text-center flex items-center justify-center gap-2'>{isLoading ? <Spinner /> : <CountUp start={0} end={stat.title}/>} +</p>
                     <p className='xl:text-xl text-center'>{stat.description}</p>
                   </div>
                 </motion.div>
