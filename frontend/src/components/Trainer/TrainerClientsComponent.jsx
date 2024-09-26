@@ -33,7 +33,8 @@ const TrainerClientsComponent = ({ setClient, client, id, setCurrId, currId }) =
         {/* action modal */}
         {id === currId &&
         <div className="actmodal absolute bg-gray-50 border right-0 rounded w-[200px]">
-          <button onClick={() => setCurrId('')} className='w-full flex gap-2 items-center hover:bg-gray-100 hover:text-teal-500 transition-all p-2'>Send a message <AiOutlineMessage /></button>
+{/* Will be implemented after the chat functionality */}
+          {/* <button onClick={() => setCurrId('')} className='w-full flex gap-2 items-center hover:bg-gray-100 hover:text-teal-500 transition-all p-2'>Send a message <AiOutlineMessage /></button> */}
           <button onClick={() => { setClient(
             client.clientId, 
             client.firstName, 
