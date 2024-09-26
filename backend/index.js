@@ -33,7 +33,7 @@ app.use('/apiv1/upload', uploadRoutes);
 app.use('/apiv1/status', statusRoute);
 
 const ___dirname = path.resolve();
-app.use('/uploads', express.static(path.join(___dirname,'/uploads')));
+app.use(express.static(path.join(___dirname,'/uploads')));
 
 
 if (process.env.NODE_ENV === 'production') {
@@ -43,8 +43,6 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile(path.resolve(___dirname, 'frontend', 'build', 'index.html'))
   );
 } else {
-  const ___dirname = path.resolve();
-  app.use('/uploads', express.static(path.join(___dirname, '/uploads')));
   app.get('/', (req, res) => {
     res.send('API is running....');
   });
