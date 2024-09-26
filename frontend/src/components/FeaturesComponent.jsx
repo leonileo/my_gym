@@ -66,7 +66,7 @@ const FeaturesComponent = () => {
         whileInView={"animate"}        
         className='md:text-4xl text-2xl text-center capitalize font-semibold flex gap-2 justify-center items-center text-slate-700'> <FaDumbbell /> Our <span className='text-teal-500'>User's</span> Favorite Features </motion.p>
       </div>
-      <div className='bg-gradient-to-br mb-5 from-teal-800 to-neutral-700 h-[50vh] p-2'>
+      <div className='bg-gradient-to-br mb-5 from-teal-800 to-neutral-700 md:h-[50vh] h-[80vh] p-2'>
       <motion.div 
         variants={FadeUp(0.6)}
         initial="initial"
@@ -95,7 +95,7 @@ const FeaturesComponent = () => {
                     <p className='md:w-[80%] text-pretty capitalize'>{card.title} {card.title} {card.title}</p>
                   </div>
 
-                  <div className='md:mr-10 grid md:grid-cols-2 grid-row-2 gap-3 rounded-md md:w-[70%] md:h-full h-[80%]'>
+                  <div className='md:mr-10 my-5 md:m-0 grid md:grid-cols-2 grid-row-2 gap-3 rounded-md md:w-[70%] md:h-full h-[80%]'>
                     <div className='grid md:grid-rows-2 grid-cols-2 md:grid-cols-1 gap-3'>
                       <motion.div 
                         variants={FadeUp(0.4)}
@@ -122,7 +122,7 @@ const FeaturesComponent = () => {
                         className='mb-10 cursor-grab rounded opacity-90 w-full h-full overflow-hidden relative bg-gradient-to-t from-[rgba(0,0,0,0.4)] to-white'>
                       </motion.div>
                     </div>
-                    <div>
+                    <div className='md:h-full'>
                       <motion.div
                       variants={SlideRight(0.4)}
                       initial="initial"
