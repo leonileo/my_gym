@@ -2,7 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://my-gym.onrender.com/",
+  "proxy": "http://localhost:5000",
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.7",
     "@testing-library/jest-dom": "^5.17.0",
@@ -11,6 +11,9 @@
     "@uiw/react-markdown-preview": "^5.1.2",
     "age-calculator": "^1.0.0",
     "flowbite-react": "^0.10.1",
+    "framer-motion": "^11.6.0",
+    "frontend": "file:",
+    "my_gym": "file:..",
     "react": "^18.3.1",
     "react-app-rewired": "^2.2.1",
     "react-countup": "^6.5.3",
