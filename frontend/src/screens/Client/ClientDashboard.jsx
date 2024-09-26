@@ -250,13 +250,13 @@ const ClientDashboard = () => {
     <>
     {
     isLoading ? "" : error && error.data.message === "Access denied!" 
-    && <div className='w-full absolute min-h-[100vh] text-2xl text-center flex items-center justify-center'>
-      <div>
-        <div className="flex text-3xl justify-center"><IoWarning /></div>
-        <p>{error.data.message}</p>
-        <button onClick={logoutHandler} className='text-lg'>Try contacting admins or try with another account</button>
+    && <div className='w-full absolute z-50 top-0 left-0 bg-white min-h-[100vh] text-2xl text-center flex items-center justify-center'>
+        <div>
+          <div className="flex text-3xl justify-center"><IoWarning /></div>
+          <p>{error.data.message}</p>
+          <button onClick={logoutHandler} className='text-lg'>Try contacting admins or try with another account</button>
+        </div>
       </div>
-    </div>
     }
       <div className='w-full min-h-[100vh] h-full flex items-start bg-gray-100 '>
         {/* left side */}
