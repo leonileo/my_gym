@@ -71,7 +71,7 @@ const AdminSideNavComponent = ({ clpsd ,setClpsd, step }) => {
                 </div>
             </Link>
         </div>
-        <div onClick={() => {setClpsd(!clpsd)}} className="clsopn absolute bottom-[70px] -right-5 z-50 sm:block hidden">
+        <div onClick={() => {setClpsd(!clpsd)}} className="clsopn absolute bottom-[70px] -right-5 z-50 md:block hidden">
             <Tooltip content={`${clpsd === false ? "Collapse" : "Open"}`} >
                 <div className='group bg-white p-4 rounded-full border-r-2 cursor-pointer hover:border-teal-500 transition-all'>
                     {clpsd === false && <FaArrowLeft className='group-hover:translate-x-1 translate-x-2 transition-all text-teal-500' />}
