@@ -79,7 +79,7 @@ const ClientSignupForm = () => {
                 <div className="icon text-teal-500"><FaLock /></div>
               </label>
             </div>
-            <div className='w-full flex gap-5 items-start'>
+            <div className='w-full xl:flex-nowrap flex-wrap flex  gap-5 items-start'>
               <label htmlFor='phoneNo' className="input-box pr-2 w-fit border rounded flex items-center justify-between">
                 <div className="in w-full">
                   <FloatingLabel required minLength={10} value={phoneNo} onChange={(e) => setPhoneNo(e.target.value)} id='phoneNo' type='tel' variant="filled" label="Phone number" className='font-semibold text-teal-500 bg-transparent border-0' sizing="md" />
