@@ -1,4 +1,3 @@
-// PROJECT POWERD BY LABA CREATIVES
 // API ROUTE and FUNCTION
 // uploadRoutes.js
 // Import necessary modules
@@ -10,7 +9,7 @@ const router = express.Router();
 
 const storage = multer.diskStorage({
     destination(req, file, cb) {
-        cb(null, '/uploads/');
+        cb(null, 'uploads/');
     },
     filename(req, file, cb) {
         cb(null, `${file.fieldname}-${Date.now()}${path.extname(file.originalname)}`);
@@ -53,4 +52,3 @@ router.post('/client-picture', upload.single('client-picture'), (req, res) => {
 })
 
 module.exports = router;
-// PROJECT POWERD BY LABA CREATIVES
