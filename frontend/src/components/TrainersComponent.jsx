@@ -116,9 +116,9 @@ const TrainersComponent = () => {
                 }}
                 className='mb-10 cursor-grab rounded overflow-hidden h-[90%] relative w-full bg-gradient-to-t from-[rgba(0,0,0,0.4)] to-white'>
                   <div className="flex p-2 absolute bottom-0 justify-center w-full">
-                    <p className='w-fit text-white text-xl text-center p-2 rounded capitalize'>{card.title}</p>
+                    <p className='w-fit text-white text-center p-2 rounded capitalize'>{card.title}</p>
                   </div>
-              </div> 
+              </div>
               </SwiperSlide>
             ))}
           </Swiper>
