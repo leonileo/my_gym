@@ -27,7 +27,7 @@ const SigninScreen = () => {
   const { search } = useLocation();
   const sp = new URLSearchParams(search);
   const redirect = sp.get('redirect') || 
-  isAdmin ? '/admin' : isTrainer ? '/trainer' : isClient ? '/client' : '/';
+  isAdmin ? '/admin/dashboard' : isTrainer ? '/trainer/dashboard' : isClient ? '/client/dashboard' : '/';
 
   useEffect(() => {
       if (userInfo) {
