@@ -147,12 +147,8 @@ const TrainerClients = () => {
   const [DOB, setDOB] = useState('')
   const [picture, setPicture] = useState('')
   const [progressId, setProgressId] = useState('')
-  const [setWeightBeforeTraining] = useState('')
-  const [setCurrentWeight] = useState('')
-  const [setPlannedWeight] = useState('')
   const [email, setEmail] = useState('')
   const [phoneNo, setPhoneNo] = useState('')
-  const [setWorkoutsAssignedForMe] = useState('')
   const [isAccountFrozen, setIsAccountFrozen] = useState('')
 
   const setClient = (clientId, firstName, fatherName, sex, DOB, picture, progressId, weightBeforeTraining, currentWeight, plannedWeight, email, phoneNo, workoutsAssignedForMe, isAccountFrozen )=> {
@@ -163,12 +159,8 @@ const TrainerClients = () => {
     setDOB(DOB)
     setPicture(picture)
     setProgressId(progressId)
-    setWeightBeforeTraining(weightBeforeTraining)
-    setCurrentWeight(currentWeight)
-    setPlannedWeight(plannedWeight)
     setEmail(email)
     setPhoneNo(phoneNo)
-    setWorkoutsAssignedForMe(workoutsAssignedForMe)
     setIsAccountFrozen(isAccountFrozen)
     setModal(2)
   }
