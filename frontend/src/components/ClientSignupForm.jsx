@@ -65,7 +65,7 @@ const ClientSignupForm = () => {
               </div>
               <div className="icon text-teal-500"><FaEnvelope /></div>
             </label>
-            <div className="flex gap-5">
+            <div className="sm:flex gap-5 sm:space-y-0 space-y-5">
               <label htmlFor='password' className="input-box pr-2 w-full border rounded flex items-center justify-between">
                 <div className="in w-full">
                   <FloatingLabel minLength={6} required value={password} onChange={(e) => setPassword(e.target.value)} id='password' type='password' variant="filled" label="Password" className='font-semibold text-teal-500 bg-transparent border-0' sizing="md" />
@@ -79,8 +79,8 @@ const ClientSignupForm = () => {
                 <div className="icon text-teal-500"><FaLock /></div>
               </label>
             </div>
-            <div className='w-full xl:flex-nowrap flex-wrap flex  gap-5 items-start'>
-              <label htmlFor='phoneNo' className="input-box pr-2 w-fit border rounded flex items-center justify-between">
+            <div className='w-full xl:flex-nowrap flex-wrap sm:flex sm:space-y-0 space-y-5 gap-5 items-start'>
+              <label htmlFor='phoneNo' className="input-box pr-2 sm:w-fit border rounded flex items-center justify-between">
                 <div className="in w-full">
                   <FloatingLabel required minLength={10} value={phoneNo} onChange={(e) => setPhoneNo(e.target.value)} id='phoneNo' type='tel' variant="filled" label="Phone number" className='font-semibold text-teal-500 bg-transparent border-0' sizing="md" />
                 </div>
@@ -88,7 +88,7 @@ const ClientSignupForm = () => {
               </label>
               <label htmlFor='DOB' className="input-box pr-2 border rounded flex items-center justify-between">
                 <div className="in w-full">
-                  <input type="date" required value={dob} onChange={(e) => setDOB(e.target.value)} id='DOB' className='focus:ring-0 font-semibold text-teal-500 bg-transparent border-0' />
+                  <FloatingLabel type='date' required value={dob} onChange={(e) => setDOB(e.target.value)} id='DOB' variant="filled" label="Date of birth" className='focus:ring-0 font-semibold text-teal-500 bg-transparent border-0' sizing="md" />
                 </div>
               </label>
               <label htmlFor='sex' className="input-box pr-2 rounded flex items-center justify-between">
