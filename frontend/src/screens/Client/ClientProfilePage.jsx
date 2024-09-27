@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import ClientSideNavComponent from '../../components/Client/ClientSideNavComponent'
 import { FaBookJournalWhills, FaClockRotateLeft, FaDumbbell, FaIdBadge, FaInfo, FaPencil, FaRegIdCard } from 'react-icons/fa6';
-import gymImg from '../../assets/images/gymImg.jpg'
+import gymImg from '../../assets/images/pImg.ico'
 import { useDispatch } from 'react-redux';
 import { FaIdCardAlt, FaTelegramPlane } from 'react-icons/fa';
 import { HiStatusOnline } from "react-icons/hi";
@@ -427,7 +427,7 @@ const ClientProfilePage = () => {
                                   </div>
                               : 
                                   (profileData.trainer ?
-                                  <div className="trainer h-[20vh] overflow-auto">
+                                  <div className="trainer h-full [20vh] overflow-auto">
                                     <div className='my-2 info flex justify-start'>
                                       <div className="box bg-white w-fit rounded border border-teal-500 text-center flex gap-3 overflow-hidden">
                                         <div className="left p-2">
