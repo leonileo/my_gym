@@ -204,17 +204,19 @@ const signupClient = asyncHandler( async (req, res) => {
     //         Same process goes for the progess.
 
     // grabbing the last client id
-    const lastId = await Client.find({}).sort({$natural: -1}).limit(1); 
-    var clientStr = lastId[0].clientId;
-    var newClientId = [];
-    newClientId = clientStr.split("-")
+    if (clientLength > 0) {
+        const lastId = await Client.find({}).sort({$natural: -1}).limit(1); 
+        var clientStr = lastId[0].clientId;
+        var newClientId = [];
+        newClientId = clientStr.split("-")
 
-    // grabbing the last client's progress id
-    const lastProgressId = await Progress.find({}).sort({$natural: -1}).limit(1); 
-    var clientPStr = lastProgressId[0].progressId;
-    var newClientProgressId = [];
-    newClientProgressId = clientPStr.split("-")
-    const progressId = `P-Id-${progressLength === 0 ? progressLength + 1 : Number(newClientProgressId[2]) + 1}`;
+        // grabbing the last client's progress id
+        const lastProgressId = await Progress.find({}).sort({$natural: -1}).limit(1); 
+        var clientPStr = lastProgressId[0].progressId;
+        var newClientProgressId = [];
+        newClientProgressId = clientPStr.split("-")
+    }
+    const progressId = `P-Id-${ progressLength === 0 ? progressLength + 1 : Number(newClientProgressId[2]) + 1}`;
 
     // @Algo 
 
