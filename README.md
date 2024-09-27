@@ -18,7 +18,7 @@
 
 ## Introduction
 Welcome to the Minimum Viable Product (MVP) of MY GYM - Fitness Hub, an all-in-one platform for the gym community. Explore the live demo [here](https://my-gym.onrender.com/).
-If you find this project interesting or have any feedback, feel free to connect with me on [LinkedIn](https://linkedin.com/in/kaleb-wendwessen). You can also read more about the development journey in [this article]().
+If you find this project interesting or have any feedback, feel free to connect with me on [LinkedIn](https://linkedin.com/in/kaleb-wendwessen). You can also read more about the development journey in [this article](https://medium.com/@kalebwendwessen/introducing-my-gym-a-fitness-hub-for-trainers-and-clients-%EF%B8%8F-%EF%B8%8F-446baf252b5c).
 
 ## Directories
 * [Frontend](./frontend/)
