@@ -12,10 +12,9 @@ const FooterComponent = () => {
         <div className="w-full justify-between sm:flex sm:items-center sm:justify-between">
           <p>My Gym</p>
           <Footer.LinkGroup>
-            <Footer.Link href="#">About</Footer.Link>
-            <Footer.Link href="#">Privacy Policy</Footer.Link>
-            <Footer.Link href="#">Licensing</Footer.Link>
-            <Footer.Link href="#">Contact</Footer.Link>
+            <Footer.Link href="/about-me">About</Footer.Link>
+            <Footer.Link href="https://github.com/leonileo/my_gym">Git repository</Footer.Link>
+            <Footer.Link href="#contact-us">Contact</Footer.Link>
           </Footer.LinkGroup>
           <div className="socials flex items-center gap-3 text-teal-800">
             <Link target='_blank' to={'https://www.instagram.com/kalebleo4/'}><FaInstagram className='hover:text-pink-500 transition-all'/></Link>
