@@ -42,7 +42,7 @@ const HeaderComponent = () => {
         </Navbar.Link>
         <Navbar.Link href="/#trainers">Trainers</Navbar.Link>
         <Navbar.Link href="/#features">Features</Navbar.Link>
-        <Navbar.Link href="/#status">Status</Navbar.Link>
+        <Navbar.Link href="/#contact-us">Contact us</Navbar.Link>
       </Navbar.Collapse>
     </Navbar>
     </>
