@@ -7,7 +7,7 @@ const progressSchema = new mongoose.Schema({
     progressId: {type: String, required: true, unique: true},
     clientId: {type: String, required: true, unique: true},
     progress: [{
-        workout: {type: mongoose.Schema.Types.ObjectId, ref: "Workout", unique: true},
+        workout: {type: mongoose.Schema.Types.ObjectId, ref: "Workout"},
         clientPicture: {type: String, default: ''},
         weightInPicture: {type: String, default: ''},
         weightInNumber: {type: String},
