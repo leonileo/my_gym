@@ -82,7 +82,7 @@ const CTAComponent = ({ isLoading, data, error }) => {
   const status = [
   {
     title: isLoading ? "" : error ? error : data.client,
-    description: `Over ${isLoading ? "" : error ? error : data.client}+ active users.`
+    description: `Join a community of over ${isLoading ? "" : error ? error : data.client}+ active users.`
   },
   {
     title: isLoading ? "" : error ? error : data.trainer,
@@ -99,8 +99,8 @@ const CTAComponent = ({ isLoading, data, error }) => {
   ]
 
   return (
-    <div id='status' className='md:h-[50vh] h-auto w-full p-5'>
-      <div className="md:flex justify-center gap-5 md:specy0 h-full w-full">
+    <div id='contact-us' className='md:min-h-[50vh] h-auto w-full p-5'>
+      <div className="md:flex justify-center gap-5 md:space-y-0 h-full w-full">
         <div 
           style={{
             backgroundImage: `linear-gradient(rgba(6, 148, 162, 0.5), rgba(2, 50, 55, 1)), url(${gymImg})`,
@@ -111,28 +111,28 @@ const CTAComponent = ({ isLoading, data, error }) => {
           className="contact rounded-md w-full overflow-hidden text-white grid h-full p-2">
             <div className="top my-5 mt-20 p-5">
               <h3 className='font-semibold md:text-3xl'>Contact us</h3>
-              <p className='xl:text-xl'>For any inquiries contact us</p>
+              <p className='xl:text-xl'>For any inquiries, feel free to contact us.</p>
               <form onSubmit={sendEmail} className='my-5 text-black'>
                 <motion.input 
                   variants={FadeUp(0.4)}
                   initial="initial"
                   whileInView={"animate"}
-                  type="text" onChange={(e) => setName(e.target.value)} name="text" id="text" placeholder='Type your name' className='bg-white border-0 rounded p-2 px-3 md:w-[250px] w-full block my-2' />
+                  type="text" onChange={(e) => setName(e.target.value)} name="text" id="text" placeholder='Type your name' className='bg-white border-0 rounded p-2 px-3 lg:w-[250px] w-full block my-2' />
                 <motion.input 
                   variants={FadeUp(0.4)}
                   initial="initial"
                   whileInView={"animate"}
-                  type="email" required onChange={(e) => setEmail(e.target.value)} name="email" id="email" placeholder='Your email' className='bg-white border-0 rounded p-2 px-3 md:w-[250px] w-full block my-2' />
+                  type="email" required onChange={(e) => setEmail(e.target.value)} name="email" id="email" placeholder='Your email' className='bg-white border-0 rounded p-2 px-3 lg:w-[250px] w-full block my-2' />
                 <motion.textarea 
                   variants={FadeUp(0.2)}
                   initial="initial"
                   whileInView={"animate"}
-                  name="message" required onChange={(e) => setMessage(e.target.value)} id="" className='bg-white resize-none block my-2 md:w-[50%] w-full rounded text-black' placeholder='Type your message here'></motion.textarea>
+                  name="message" required onChange={(e) => setMessage(e.target.value)} id="" className='bg-white resize-none block my-2 lg:w-[50%] w-full rounded text-black' placeholder='Type your message here'></motion.textarea>
                 <motion.button 
                   variants={SlideRight(0.5)}
                   initial="initial"
                   whileInView={"animate"}
-                  className='p-2 px-3 rounded w-full mt-5 bg-teal-500 text-white hover:bg-white hover:text-teal-500 transition-all font-semibold'>
+                  className='p-2 px-3 rounded md:w-auto w-full mt-5 bg-teal-500 text-white hover:bg-white hover:text-teal-500 transition-all font-semibold'>
                     {
                     loading ? (
                       <div className="flex gap-2 items-center">
@@ -170,7 +170,7 @@ const CTAComponent = ({ isLoading, data, error }) => {
         </div>
 
         <div className='md:w-[50%] flex justify-center items-center md:my-0 my-5'>
-          <div className='h-[80%]'>
+          <div className='md:h-[80%] h-[40vh]'>
             <div className="status grid grid-cols-2 grid-rows-2 justify-center gap-3 w-full h-full">
               {status.map((stat) => 
                 <motion.div
