@@ -1,6 +1,7 @@
 import React from 'react'
 import { motion } from 'framer-motion'
-import gymImg from '../assets/images/gymImg.jpg'
+import trainerImg from '../assets/images/trainerImg.png'
+import clientImg from '../assets/images/clientImg.png'
 import { Link } from 'react-router-dom'
 
 export const FadeUp = (delay) => {
@@ -87,14 +88,14 @@ const HeroComponent = () => {
         initial="initial"
         whileInView="animate"
         className="side-img absolute md:-left-80 -left-40 md:-bottom-40 -bottom-20 z-10">
-          <img src={gymImg} alt="" className='md:w-[350px] w-[150px] rotate-12 translate-y-5 opacity-40 hover:opacity-100 transition-all rounded-lg' />
+          <img src={trainerImg} alt="" className='md:w-[350px]  sca w-[150px] rotate-12 translate-y-5 opacity-40 hover:opacity-100 transition-all rounded-lg' />
         </motion.div>
         <motion.div 
         variants={SlideRight(0.9)}
         initial="initial"
         whileInView="animate"
         className="side-img absolute md:-right-96 -right-40 md:-top-40 -top-20 z-10">
-          <img src={gymImg} alt="" className='md:w-[350px] w-[150px] -rotate-[25deg] translate-y-5 opacity-40 hover:opacity-100 transition-all rounded-lg' />
+          <img src={clientImg} alt="" className='md:w-[350px] w-[150px] -rotate-[25deg] translate-y-5 opacity-40 hover:opacity-100 transition-all rounded-lg' />
         </motion.div>
       </div>
     </div>
