@@ -34,6 +34,7 @@ import AdminTrainers from './screens/Admin/AdminTrainers'
 import AdminChat from './screens/Admin/AdminChat'
 import AdminProfile from './screens/Admin/AdminProfile'
 import AdminRoute from './components/AdminRoute'
+import AboutMe from './screens/AboutMe';
 
 // screens
 
@@ -42,6 +43,7 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<App />} >
       <Route index={true} path='/' element={<HomeScreen />} />
+      <Route path='/about-me' element={<AboutMe />} />
       <Route path='/signin' element={<SigninScreen />} />
       <Route path='/signup' element={<SignupScreen />} />
       <Route element={<ClientRoute />} >
