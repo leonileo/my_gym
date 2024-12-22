@@ -13,6 +13,7 @@
 ## Project name
 # MY GYM - Fitness Hub (MVP)
 
+
 ## Web app architechture
 <p><img src="./frontend/src/assets/Web-architechture.png" /> </p>
 
